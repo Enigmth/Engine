@@ -1,21 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react'
+import { StyleSheet, FlatList, SafeAreaView, View, Text } from 'react-native'
+import { carLights } from './CarLights'
+import CarLight from './components/CarLight'
 
-export default function App() {
+export default function App () {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <SafeAreaView style={styles.container}>
+      <FlatList data={carLights}
+                // ListHeaderComponent={
+                //   <View style={{ flex: 1, alignItems: 'center',height:40,justifyContent:'center' }}>
+                //     <Text style={{fontWeight:'bold'}}>Car warning lights</Text>
+                //   </View>
+                // }
+                style={{ flex: 1 }}
+                initialNumToRender={16}
+                renderItem={({ item }) => <CarLight carLight={item}/>}
+                keyExtractor={i => i.image_url}/>
+    </SafeAreaView>
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingVertical: 10,
   },
-});
+})
