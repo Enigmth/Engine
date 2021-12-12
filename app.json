@@ -27,6 +27,17 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "expo-postpublish-discord-notifier",
+          "config": {
+            "WEBHOOK_URL": "https://discord.com/api/webhooks/919389881548029983/hK-Zo5OGu7UOfyFesc00XfbPDFPQMgkaJjv69hqVViF5j55fEQ24_PCjK8GqzM-DInDO",
+            "username": "Engine Expo Publish"
+          }
+        }
+      ]
     }
   }
 }
