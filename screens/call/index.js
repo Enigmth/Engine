@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 import {
   FlatList,
-  Linking,
-  SafeAreaView,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import EngineSafeAreaView from '../../components/EngineSafeAreaView'
 import MechanicalModal from '../../components/MechanicalModal'
 import Search from '../../components/Search'
 import GlobalState from '../../GlobalState'
@@ -76,14 +75,14 @@ const Call = () => {
       {/*</View>*/}
     </TouchableOpacity>
   )
-
-  const onCallPress = (app) => {
-    Linking.openURL(app).catch()
-  }
+  //
+  // const onCallPress = (app) => {
+  //   Linking.openURL(app).catch()
+  // }
 
   let context = React.useContext(GlobalState)
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+    <EngineSafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <FlatList data={context.mechanics.
         filter(d => d.name.toUpperCase().includes(search.toUpperCase()) ||
           context.language === 'mk' && d.name.toUpperCase().
@@ -103,13 +102,13 @@ const Call = () => {
                 </View>}
                 keyExtractor={i => i.name}
                 renderItem={({ item }) => <Item item={item}/>}
-                // contentContainerStyle={{ paddingBottom: tabBarHeight() }}
+        // contentContainerStyle={{ paddingBottom: tabBarHeight() }}
 
       />
       {selectedInfo ? <MechanicalModal
         mechanic={selectedInfo}
         onPress={() => setSelectedInfo(null)}/> : null}
-    </SafeAreaView>
+    </EngineSafeAreaView>
   )
 }
 

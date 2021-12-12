@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import {
   LayoutAnimation,
-  SafeAreaView,
   ScrollView,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import EngineSafeAreaView from '../components/EngineSafeAreaView'
 import Colors from '../constants/Colors'
 import Languages from '../constants/language/Languages'
 import GlobalState from '../GlobalState'
@@ -29,7 +29,7 @@ const Settings = () => {
     setShowLanguagePicker(false)
   }
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+    <EngineSafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <View
         style={{
           height: 50,
@@ -113,7 +113,7 @@ const Settings = () => {
         </View>
 
       }
-    </SafeAreaView>
+    </EngineSafeAreaView>
   )
 }
 

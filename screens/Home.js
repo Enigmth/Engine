@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import {
   Dimensions,
   FlatList,
-  SafeAreaView,
   StyleSheet,
   Text,
   View,
 } from 'react-native'
 import CarLight from '../components/CarLight'
+import EngineSafeAreaView from '../components/EngineSafeAreaView'
 import Search from '../components/Search'
 import { carLights } from '../constants/CarLights'
 import { CarLightsAl } from '../constants/CarLightsAl'
@@ -15,7 +15,6 @@ import { CarLightsMk } from '../constants/CarLightsMk'
 import GlobalState from '../GlobalState'
 import MacedonianLanguageServiceImpl
   from '../services/MacedonianLanguageServiceImpl'
-import { tabBarHeight } from '../services/TabBarServiceImpl'
 import Translate from '../Translate'
 
 const { height } = Dimensions.get('window')
@@ -39,7 +38,7 @@ export default function Home () {
     }
   }
   return (
-    <SafeAreaView style={[styles.container]}>
+    <EngineSafeAreaView style={[styles.container]}>
       <FlatList
         data={getCarLights().filter(
           cl => cl.name.toUpperCase().includes(search.toUpperCase()) ||
@@ -71,7 +70,7 @@ export default function Home () {
         initialNumToRender={16}
         renderItem={({ item }) => <CarLight carLight={item}/>}
         keyExtractor={i => i.image_url}/>
-    </SafeAreaView>)
+    </EngineSafeAreaView>)
 }
 
 const styles = StyleSheet.create({
