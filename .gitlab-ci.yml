@@ -8,6 +8,7 @@ stages:
   - deploy
 before_script:
   - npm ci
+  - npm install -g expo-cli
 expo-deployments:
   stage: deploy
   script:
