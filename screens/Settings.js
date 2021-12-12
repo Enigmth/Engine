@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Colors from '../constants/Colors'
+import Languages from '../constants/language/Languages'
 import GlobalState from '../GlobalState'
 import DimensionServiceImpl from '../services/DimensionServiceImpl'
 import Translate from '../Translate'
@@ -93,13 +94,13 @@ const Settings = () => {
             }}>
             <LanguageButton lang={'Shqip'}
                             selectedLang={context.language}
-                            onPress={() => onChangeLanguage('al')}/>
+                            onPress={() => onChangeLanguage(Languages.al)}/>
             <LanguageButton lang={'English'}
                             selectedLang={context.language}
-                            onPress={() => onChangeLanguage('en')}/>
+                            onPress={() => onChangeLanguage(Languages.en)}/>
             <LanguageButton lang={'Makeдoнskи'}
                             selectedLang={context.language}
-                            onPress={() => onChangeLanguage('mk')}/>
+                            onPress={() => onChangeLanguage(Languages.mk)}/>
           </View>
           <TouchableOpacity style={{
             flex: 1,
