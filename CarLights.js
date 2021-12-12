@@ -111,12 +111,12 @@ export const carLights = [
   },
   {
     'name': 'Master Warning Light',
-    'description': 'Indicator light usually accompanied by another warning light and indicates that one or more warning systems have been',
+    'description': 'Indicator light usually accompanied by another warning light and indicates that one or more warning systems have been detected.',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-master-warning.jpg',
   },
   {
     'name': 'Information Warning Light',
-    'description': 'Indicator light will turn on when a new message is stored in the information displayIt will be red or amber in',
+    'description': 'Indicator light will turn on when a new message is stored in the information display. It will be red or amber in color depending on the severity of the message and will remain on until the cause of the message has been rectified.',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-information-light-warning.jpg',
   },
   {
@@ -141,7 +141,7 @@ export const carLights = [
   },
   {
     'name': 'Distance Warning',
-    'description': 'Indicator light means that a vehicle in front is too close or is being approached too quickly, or that a stationary',
+    'description': 'Indicator light means that a vehicle in front is too close or is being approached too quickly, or that a stationary obstacle exists in the direction of travel.',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-distance-warning.jpg',
   },
   {
@@ -156,7 +156,7 @@ export const carLights = [
   },
   {
     'name': 'Check Engine or Malfunction Indicator Light (MIL)',
-    'description': 'Indicator light turns on whenever the engine is turned on to check the bulbIf the light stays illuminated, the',
+    'description': 'Indicator light turns on whenever the engine is turned on to check the bulb. If the light stays illuminated, the car’s diagnostic systems have detected a malfunction that needs to be investigated',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-check-engine.jpg',
   },
   {
@@ -196,7 +196,7 @@ export const carLights = [
   },
   {
     'name': 'Airbag Indicator',
-    'description': 'Indicator light turns on when the front airbag is switched offIf this lamp lights up or flashes there is a fault in',
+    'description': 'Indicator light turns on when the front airbag is switched off. If this lamp lights up or flashes there is a fault in the airbag or seatbelt system',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-airbag.jpg',
   },
   {
@@ -361,12 +361,12 @@ export const carLights = [
   },
   {
     'name': 'Ignition Switch Warning',
-    'description': 'Indicator light means there’s an issue with the ignition system or the car keyIt could be due to a glitch or worn',
+    'description': 'Indicator light means there’s an issue with the ignition system or the car keyIt could be due to a glitch or worn out key',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-ignition-switch-warning.jpg',
   },
   {
     'name': 'Hill Descent Control',
-    'description': 'Indicator light turns on when the system is activated and helps you maintain a specific speed while driving down a',
+    'description': 'Indicator light turns on when the system is activated and helps you maintain a specific speed while driving down a hill',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-hill-descent-control.jpg',
   },
   {
@@ -386,7 +386,7 @@ export const carLights = [
   },
   {
     'name': 'Convertible Roof Warning Light',
-    'description': 'Indicator light will turn on while the roof is either opening or closingIf the lamp is lit continuously the roof is',
+    'description': 'Indicator light will turn on while the roof is either opening or closing. If the lamp is lit continuously the roof is not fully opened, or there is a fault in the system',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-convertible-roof-warning-light.jpg',
   },
   {
@@ -406,7 +406,7 @@ export const carLights = [
   },
   {
     'name': 'Automatic Emergency Braking (AEB)',
-    'description': 'Indicator light turns on when the AEB system is turned off or when the radar sensor or cover is blocked with dirt or',
+    'description': 'Indicator light turns on when the AEB system is turned off or when the radar sensor or cover is blocked with dirt or snow',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-automatic-emegency-braking.jpg',
   },
   {
@@ -421,7 +421,7 @@ export const carLights = [
   },
   {
     'name': 'Start/Stop Warning Light',
-    'description': 'Indicator light turns on to inform the driver that Intelligent Stop / Start system is active and the engine has been',
+    'description': 'Indicator light turns on to inform the driver that Intelligent Stop / Start system is active and the engine has been shut down',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-start-stop-warning.jpg',
   },
   {
@@ -431,12 +431,12 @@ export const carLights = [
   },
   {
     'name': 'Seat Temperature',
-    'description': 'Indicator light means that the air flow is distributed between front side window, windscreen and footwell de-misting',
+    'description': 'Indicator light means that the air flow is distributed between front side window, windscreen and footwell de-misting vents',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-seat-temperature.jpg',
   },
   {
     'name': 'Glow Plug Indicator',
-    'description': '        Indicator light means that the engine’s glow plugs are warming up and the engine should not be started until',
+    'description': 'Indicator light means that the engine’s glow plugs are warming up and the engine should not be started until the light goes out. If it flashes, an issue has been detected, such as a worn out glow plug',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-glow-plug.jpg',
   },
   {
@@ -456,7 +456,7 @@ export const carLights = [
   },
   {
     'name': 'AdBlue Malfunction',
-    'description': 'Indicator light means either the AdBlue system is malfunctioning or the system is not filled with the standard',
+    'description': 'Indicator light means either the AdBlue system is malfunctioning or the system is not filled with the standard liquid',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-adblue-tank-malfunction.jpg',
   },
   {
