@@ -1,25 +1,16 @@
-image: node:16
-
+image: node:alpine
 cache:
- key: ${CI_COMMIT_REF_SLUG}
- paths:
-   - ~/.npm
-   - node_modules/
-
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - ~/.npm
 stages:
- - deploy
-
-
+  - test
+  - deploy
 before_script:
- - npm install -g npm@latest
- - npm i expo-cli
- - echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf && sysctl -p
-
-deploy:
- stage: deploy
- script:
-   - npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
-   - npx expo publish --non-interactive
- only:
-   - main
-   - dev
+  - npm ci
+expo-deployments:
+  stage: deploy
+  script:
+    - apk add --no-cache bash
+    - npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+    - npx expo publish --non-interactive
