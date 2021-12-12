@@ -13,6 +13,7 @@ import Languages from '../constants/language/Languages'
 import GlobalState from '../GlobalState'
 import DimensionServiceImpl from '../services/DimensionServiceImpl'
 import Translate from '../Translate'
+import Constants from 'expo-constants'
 
 const height = DimensionServiceImpl.getHeight()
 const Settings = () => {
@@ -63,7 +64,7 @@ const Settings = () => {
           </TouchableOpacity>
         </Row>
         <Row name={Translate.t('Version')}>
-          <Text>1.0</Text>
+          <Text>{Constants.manifest.version}</Text>
         </Row>
       </ScrollView>
       {showLanguagePicker &&
@@ -123,7 +124,8 @@ const Row = (props) => {
       justifyContent: 'space-between',
       borderBottomWidth: .5,
       borderBottomColor: '#dadedf',
-      paddingVertical: 8,
+      paddingVertical: 10,
+      alignItems: 'center',
     }}>
       <Text>{props.name}</Text>
       {props.children}

@@ -51,7 +51,7 @@ export default function Home () {
           <View style={{
             backgroundColor: 'white', height: 40,
             paddingBottom: 5,
-            margin: 10,
+            marginHorizontal: 10,
           }}>
             <Search value={search}
                     clearButtonMode={'while-editing'}
@@ -67,7 +67,7 @@ export default function Home () {
           }}>
           <Text>{Translate.t('NoDataFound')}</Text>
         </View>}
-        contentContainerStyle={{ paddingBottom: tabBarHeight() }}
+        // contentContainerStyle={{ paddingBottom: tabBarHeight() }}
         initialNumToRender={16}
         renderItem={({ item }) => <CarLight carLight={item}/>}
         keyExtractor={i => i.image_url}/>

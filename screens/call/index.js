@@ -100,7 +100,7 @@ const Call = () => {
                 ListHeaderComponent={<View style={{
                   backgroundColor: 'white', height: 40,
                   paddingBottom: 5,
-                  margin: 10,
+                  marginHorizontal: 10,
                 }}>
                   <Search value={search}
                           clearButtonMode={'while-editing'}
@@ -109,7 +109,7 @@ const Call = () => {
                 </View>}
                 keyExtractor={i => i.name}
                 renderItem={({ item }) => <Item item={item}/>}
-                contentContainerStyle={{ paddingBottom: tabBarHeight() }}
+                // contentContainerStyle={{ paddingBottom: tabBarHeight() }}
 
       />
       {selectedInfo ? <MechanicalModal

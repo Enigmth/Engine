@@ -19,15 +19,16 @@ const TabScreen = () => {
         headerShown: false,
         // backBehavior: 'none',
         tabBarStyle: {
-          position: 'absolute',
-          backgroundColor: Colors.defaultGrey,
-          borderRadius: 8,
-          height: 60,
-          bottom: 20,
-          left: 20,
-          right: 20,
-          justifyContent: 'center',
-          alignSelf: 'center',
+          // // position: 'absolute',
+          // backgroundColor: Colors.defaultGrey,
+          // borderRadius: 8,
+          // height: 60,
+          // // marginBottom: 30,
+          // left: 20,
+          // right: 20,
+          // justifyContent: 'center',
+          // alignSelf: 'center',
+          // flexDirection: 'row',
         },
         tabBarShowLabel: false,
         tabBarIcon: ({
@@ -49,6 +50,9 @@ const TabScreen = () => {
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
+            // height: 50,
+            // height: '100%',
+            // paddingBottom:-10
           }}>{iconName}</View>
         },
       })}
