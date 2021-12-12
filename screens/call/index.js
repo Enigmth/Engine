@@ -10,20 +10,14 @@ import {
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MechanicalModal from '../../components/MechanicalModal'
 import Search from '../../components/Search'
-import { getMechanics } from '../../constants/Mechanical_engineers'
 import GlobalState from '../../GlobalState'
 import MacedonianLanguageServiceImpl
   from '../../services/MacedonianLanguageServiceImpl'
-import { tabBarHeight } from '../../services/TabBarServiceImpl'
 import Translate from '../../Translate'
 
 const Call = () => {
   const [search, setSearch] = useState('')
-  const [data, setData] = useState([])
   const [selectedInfo, setSelectedInfo] = useState(null)
-  React.useEffect(() => {
-    setData(getMechanics())
-  }, [])
 
   const Item = ({ item }) => (
     <TouchableOpacity
@@ -90,7 +84,7 @@ const Call = () => {
   let context = React.useContext(GlobalState)
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-      <FlatList data={data.
+      <FlatList data={context.mechanics.
         filter(d => d.name.toUpperCase().includes(search.toUpperCase()) ||
           context.language === 'mk' && d.name.toUpperCase().
             includes(
