@@ -12,7 +12,7 @@ const Search = props => {
       <TextInput
         style={{
           // margin: 10,
-          height: 40,
+          maxHeight: 40,
           backgroundColor: Colors.defaultGrey,
           padding: 8,
           paddingLeft: 15,

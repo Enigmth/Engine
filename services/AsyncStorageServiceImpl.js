@@ -9,3 +9,7 @@ export function setAsyncStorage (key, value) {
 export function multiGet (items) {
   return AsyncStorage.multiGet(items)
 }
+
+export function getAsyncStorage (item) {
+  return AsyncStorage.getItem(item)
+}

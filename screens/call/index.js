@@ -6,18 +6,72 @@ import {
   View,
 } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import ButtonPicker from '../../components/ButtonPicker'
 import EngineSafeAreaView from '../../components/EngineSafeAreaView'
 import MechanicalModal from '../../components/MechanicalModal'
+import Modal from '../../components/Modal'
 import Search from '../../components/Search'
+import PageLoading from '../../components/Spinner'
+import AsyncStorageItems from '../../constants/async-storage/AsyncStorageItems'
+import Citys from '../../constants/Citys'
+import { getMechanics } from '../../constants/Mechanical_engineers'
 import GlobalState from '../../GlobalState'
+import IconMaterial from 'react-native-vector-icons/FontAwesome'
+
+import {
+  getAsyncStorage,
+  setAsyncStorage,
+} from '../../services/AsyncStorageServiceImpl'
+import GeolibServiceImpl from '../../services/GeolibServiceImpl'
 import MacedonianLanguageServiceImpl
   from '../../services/MacedonianLanguageServiceImpl'
+import MechanicServiceImpl from '../../services/mechanic/MechanicServiceImpl'
 import Translate from '../../Translate'
 
 const Call = () => {
+  let context = React.useContext(GlobalState)
   const [search, setSearch] = useState('')
   const [selectedInfo, setSelectedInfo] = useState(null)
+  const [mechanics, setMechanics] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [city, setCity] = useState(Citys.TETOVO)
+  const [showCityPopup, setShowCityPopup] = useState(false)
 
+  React.useEffect(() => {
+    getByCity()
+  }, [])
+
+  const getByCity = city => {
+    setLoading(true)
+    MechanicServiceImpl.get(city).then(res => {
+      let data = res.data
+      filterByLocation(data)
+      setAsyncStorage(AsyncStorageItems.Mechanics, JSON.stringify(res.data))
+    }).catch((e) => {
+      console.log(e)
+      getAsyncStorage(AsyncStorageItems.Mechanics).then(localMechanics => {
+        let data = localMechanics ? localMechanics : getMechanics()
+        filterByLocation(data)
+      })
+    }).finally(() => {
+      setLoading(false)
+    })
+  }
+
+  const filterByLocation = data => {
+    let nonLocationMechanics = data.filter(m => !m.latitude)
+    let byDistance = data.filter(m => m.latitude)
+    if (context.location) {
+      byDistance = GeolibServiceImpl.orderByDistance(context.location,
+        byDistance)
+    }
+    setMechanics([...byDistance, ...nonLocationMechanics])
+  }
+
+  const onChangeCity = city => {
+    setCity(city)
+    setShowCityPopup(false)
+  }
   const Item = ({ item }) => (
     <TouchableOpacity
       onPress={() => setSelectedInfo(item)}
@@ -80,35 +134,59 @@ const Call = () => {
   //   Linking.openURL(app).catch()
   // }
 
-  let context = React.useContext(GlobalState)
   return (
-    <EngineSafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-      <FlatList data={context.mechanics.
-        filter(d => d.name.toUpperCase().includes(search.toUpperCase()) ||
-          context.language === 'mk' && d.name.toUpperCase().
-            includes(
-              MacedonianLanguageServiceImpl.convert(search.toUpperCase())))}
-                style={{ backgroundColor: 'white' }}
-                stickyHeaderIndices={[0]}
-                ListHeaderComponent={<View style={{
-                  backgroundColor: 'white', height: 40,
-                  paddingBottom: 5,
-                  marginHorizontal: 10,
-                }}>
-                  <Search value={search}
-                          clearButtonMode={'while-editing'}
-                          placeholder={Translate.t('Search')}
-                          onChangeText={val => setSearch(val)}/>
-                </View>}
-                keyExtractor={i => i.name}
-                renderItem={({ item }) => <Item item={item}/>}
-        // contentContainerStyle={{ paddingBottom: tabBarHeight() }}
+    loading ?
+      <PageLoading message={Translate.t('FetchingData')}/> :
+      <EngineSafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+        <FlatList data={mechanics.
+          filter(d => d.name.toUpperCase().includes(search.toUpperCase()) ||
+            context.language === 'mk' && d.name.toUpperCase().
+              includes(
+                MacedonianLanguageServiceImpl.convert(search.toUpperCase())))}
+                  style={{ backgroundColor: 'white' }}
+                  stickyHeaderIndices={[0]}
+                  ListHeaderComponent={<View style={{
+                    backgroundColor: 'white', height: 40,
+                    paddingBottom: 5,
+                    marginHorizontal: 10,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
+                    <Search value={search}
+                            containerStyle={{ flex: 1 }}
+                            clearButtonMode={'while-editing'}
+                            placeholder={Translate.t('Search')}
+                            onChangeText={val => setSearch(val)}/>
+                    <TouchableOpacity
+                      onPress={() => setShowCityPopup(true)}
+                      style={{
+                        paddingHorizontal: 5,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}>
+                      <Text>{Translate.t(city.toUpperCase())}</Text>
+                      <MaterialIcons name={'arrow-drop-down'} size={20}/>
+                    </TouchableOpacity>
+                  </View>}
+                  keyExtractor={i => i.name}
+                  renderItem={({ item }) => <Item item={item}/>}
+          // contentContainerStyle={{ paddingBottom: tabBarHeight() }}
 
-      />
-      {selectedInfo ? <MechanicalModal
-        mechanic={selectedInfo}
-        onPress={() => setSelectedInfo(null)}/> : null}
-    </EngineSafeAreaView>
+        />
+        {selectedInfo ? <MechanicalModal
+          mechanic={selectedInfo}
+          onPress={() => setSelectedInfo(null)}/> : null}
+        {showCityPopup &&
+          <Modal close={() => setShowCityPopup(false)}>
+            <ButtonPicker lang={Translate.t('TETOVO')}
+                          onPress={() => onChangeCity(Citys.TETOVO)}/>
+            <ButtonPicker lang={Translate.t('SKOPJE')}
+                          onPress={() => onChangeCity(Citys.SKOPJE)}/>
+            <ButtonPicker lang={Translate.t('STRUGA')}
+                          onPress={() => onChangeCity(Citys.STRUGA)}/>
+          </Modal>
+        }
+      </EngineSafeAreaView>
   )
 }
 

@@ -53,6 +53,7 @@ export default function Home () {
             marginHorizontal: 10,
           }}>
             <Search value={search}
+                    containerStyle={{ flex: 1 }}
                     clearButtonMode={'while-editing'}
                     placeholder={Translate.t('Search')}
                     onChangeText={val => setSearch(val)}/>

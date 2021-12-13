@@ -160,5 +160,6 @@
   "Settings": "Parametrat",
   "NoDataFound": "Nuk u gjetën të dhëna",
   "AddressNotFound": "Adresa nuk u gjet",
-  "Version": "Versioni"
+  "Version": "Versioni",
+  "FetchingData": "Duke marrë të dhëna"
 }

@@ -175,5 +175,6 @@
   "Bus": "Bus",
   "Parking": "Parking",
   "AddressNotFound": "Address not found",
-  "Version": "Version"
+  "Version": "Version",
+  "FetchingData": "Fetching data"
 }
