@@ -16,7 +16,6 @@ import AsyncStorageItems from '../../constants/async-storage/AsyncStorageItems'
 import Citys from '../../constants/Citys'
 import { getMechanics } from '../../constants/Mechanical_engineers'
 import GlobalState from '../../GlobalState'
-import IconMaterial from 'react-native-vector-icons/FontAwesome'
 
 import {
   getAsyncStorage,
