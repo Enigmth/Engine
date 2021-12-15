@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TouchableOpacity,LayoutAnimation } from 'react-native'
+import { LayoutAnimation, TouchableOpacity, View } from 'react-native'
 import DimensionServiceImpl from '../services/DimensionServiceImpl'
 
 const height = DimensionServiceImpl.getHeight()
@@ -8,7 +8,7 @@ const Modal = props => {
 
   React.useEffect(() => {
     LayoutAnimation.easeInEaseOut()
-  },[])
+  }, [])
   const close = () => {
     LayoutAnimation.easeInEaseOut()
     props.close()
@@ -38,6 +38,10 @@ const Modal = props => {
           backgroundColor: 'white',
           padding: 20,
           borderRadius: 8,
+          // height: height / 1.5,
+          maxHeight: 320,
+          flex: 1,
+          ...props.containerStyle,
         }}>
         {props.children}
       </View>

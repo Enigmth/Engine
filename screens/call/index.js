@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import {
   FlatList,
+  ScrollView,
   Text,
   TouchableOpacity,
   View,
@@ -37,7 +38,7 @@ const Call = () => {
   const [showCityPopup, setShowCityPopup] = useState(false)
 
   React.useEffect(() => {
-    getByCity()
+    getByCity(city)
   }, [])
 
   const getByCity = city => {
@@ -67,9 +68,13 @@ const Call = () => {
     setMechanics([...byDistance, ...nonLocationMechanics])
   }
 
-  const onChangeCity = city => {
-    setCity(city)
+  const onChangeCity = updatedCity => {
+    if (city !== updatedCity) {
+      setCity(city)
+      getByCity(updatedCity)
+    }
     setShowCityPopup(false)
+
   }
   const Item = ({ item }) => (
     <TouchableOpacity
@@ -167,7 +172,7 @@ const Call = () => {
                       <MaterialIcons name={'arrow-drop-down'} size={20}/>
                     </TouchableOpacity>
                   </View>}
-                  keyExtractor={i => i.name}
+                  keyExtractor={i => i.name + i.address}
                   renderItem={({ item }) => <Item item={item}/>}
           // contentContainerStyle={{ paddingBottom: tabBarHeight() }}
 
@@ -176,13 +181,20 @@ const Call = () => {
           mechanic={selectedInfo}
           onPress={() => setSelectedInfo(null)}/> : null}
         {showCityPopup &&
-          <Modal close={() => setShowCityPopup(false)}>
-            <ButtonPicker lang={Translate.t('TETOVO')}
-                          onPress={() => onChangeCity(Citys.TETOVO)}/>
-            <ButtonPicker lang={Translate.t('SKOPJE')}
-                          onPress={() => onChangeCity(Citys.SKOPJE)}/>
-            <ButtonPicker lang={Translate.t('STRUGA')}
-                          onPress={() => onChangeCity(Citys.STRUGA)}/>
+          <Modal close={() => setShowCityPopup(false)}
+                 containerStyle={{ minHeight: 320 }}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <ButtonPicker lang={Translate.t('TETOVO')}
+                            onPress={() => onChangeCity(Citys.TETOVO)}/>
+              <ButtonPicker lang={Translate.t('SKOPJE')}
+                            onPress={() => onChangeCity(Citys.SKOPJE)}/>
+              <ButtonPicker lang={Translate.t('STRUGA')}
+                            onPress={() => onChangeCity(Citys.STRUGA)}/>
+              <ButtonPicker lang={Translate.t('GOSTIVAR')}
+                            onPress={() => onChangeCity(Citys.GOSTIVAR)}/>
+              <ButtonPicker lang={Translate.t('OHRID')}
+                            onPress={() => onChangeCity(Citys.OHRID)}/>
+            </ScrollView>
           </Modal>
         }
       </EngineSafeAreaView>
