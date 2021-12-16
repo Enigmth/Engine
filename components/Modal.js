@@ -39,8 +39,9 @@ const Modal = props => {
           padding: 20,
           borderRadius: 8,
           // height: height / 1.5,
-          maxHeight: 320,
+          maxHeight: 350,
           flex: 1,
+          marginTop: 15,
           ...props.containerStyle,
         }}>
         {props.children}

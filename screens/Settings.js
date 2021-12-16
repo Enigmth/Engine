@@ -1,10 +1,6 @@
+import Constants from 'expo-constants'
 import React, { useState } from 'react'
-import {
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import ButtonPicker from '../components/ButtonPicker'
 import EngineSafeAreaView from '../components/EngineSafeAreaView'
@@ -12,7 +8,6 @@ import Modal from '../components/Modal'
 import Languages from '../constants/language/Languages'
 import GlobalState from '../GlobalState'
 import Translate from '../Translate'
-import Constants from 'expo-constants'
 
 const Settings = () => {
   const context = React.useContext(GlobalState)
@@ -64,14 +59,14 @@ const Settings = () => {
         </Row>
       </ScrollView>
       {showLanguagePicker &&
-        <Modal close={() => hideLangPicker()}>
+        <Modal close={() => hideLangPicker()} containerStyle={{ flex: 0 }}>
           <ButtonPicker lang={'Shqip'}
                         selectedLang={context.language}
                         onPress={() => onChangeLanguage(Languages.al)}/>
           <ButtonPicker lang={'English'}
                         selectedLang={context.language}
                         onPress={() => onChangeLanguage(Languages.en)}/>
-          <ButtonPicker lang={'Makeдoнskи'}
+          <ButtonPicker lang={'Makeдoнckи'}
                         selectedLang={context.language}
                         onPress={() => onChangeLanguage(Languages.mk)}/>
         </Modal>

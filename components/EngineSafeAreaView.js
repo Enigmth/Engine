@@ -1,17 +1,20 @@
 import React from 'react'
-import { Platform, SafeAreaView, StatusBar } from 'react-native'
+import { SafeAreaView, StatusBar, View } from 'react-native'
 
-const isIos = Platform.OS === 'ios'
-const paddingTop = isIos
-  ? StatusBar.currentHeight + 10
-  : StatusBar.currentHeight +
-  30
+let paddingTop = StatusBar.currentHeight
+if (!paddingTop) {
+  paddingTop = 20
+}
 const EngineSafeAreaView = props => {
   return (
-    <SafeAreaView
-      style={[props.style, { marginTop: paddingTop }]}>
-      {props.children}
-    </SafeAreaView>
+    <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <SafeAreaView
+        style={[
+          props.style,
+          { marginTop: paddingTop, backgroundColor: 'white' }]}>
+        {props.children}
+      </SafeAreaView>
+    </View>
   )
 }
 

@@ -110,7 +110,8 @@ const Call = () => {
   return (
     loading ?
       <PageLoading message={Translate.t('FetchingData')}/> :
-      <EngineSafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+      <EngineSafeAreaView
+        style={{ flex: 1, backgroundColor: 'white', paddingVertical: 10 }}>
         <FlatList data={mechanics.
           filter(d => d.name.toUpperCase().includes(search.toUpperCase()) ||
             context.language === 'mk' && d.name.toUpperCase().
