@@ -5,6 +5,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import ButtonPicker from '../components/ButtonPicker'
 import EngineSafeAreaView from '../components/EngineSafeAreaView'
 import Modal from '../components/Modal'
+import Citys from '../constants/Citys'
 import Languages from '../constants/language/Languages'
 import GlobalState from '../GlobalState'
 import Translate from '../Translate'
@@ -12,9 +13,19 @@ import Translate from '../Translate'
 const Settings = () => {
   const context = React.useContext(GlobalState)
   const [showLanguagePicker, setShowLanguagePicker] = useState(false)
+  const [showCityPopup, setShowCityPopup] = useState(false)
+
   const onChangeLanguage = lang => {
     context.setLanguage(lang)
     hideLangPicker()
+  }
+
+  const onChangeCity = updatedCity => {
+    if (context.city !== updatedCity) {
+      context.setCity(updatedCity)
+      // getByCity(updatedCity)
+    }
+    setShowCityPopup(false)
   }
 
   const hideLangPicker = () => {
@@ -54,6 +65,17 @@ const Settings = () => {
             <MaterialIcons name={'arrow-drop-down'} size={20}/>
           </TouchableOpacity>
         </Row>
+        <Row name={Translate.t('City')}>
+          <TouchableOpacity
+            onPress={() => setShowCityPopup(true)}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <Text>{Translate.t(context.city.toUpperCase())}</Text>
+            <MaterialIcons name={'arrow-drop-down'} size={20}/>
+          </TouchableOpacity>
+        </Row>
         <Row name={Translate.t('Version')}>
           <Text>{Constants.manifest.version}</Text>
         </Row>
@@ -69,6 +91,24 @@ const Settings = () => {
           <ButtonPicker lang={'Makeдoнckи'}
                         selectedLang={context.language}
                         onPress={() => onChangeLanguage(Languages.mk)}/>
+        </Modal>
+      }
+
+      {showCityPopup &&
+        <Modal close={() => setShowCityPopup(false)}
+               containerStyle={{ minHeight: 320 }}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <ButtonPicker lang={Translate.t('TETOVO')}
+                          onPress={() => onChangeCity(Citys.TETOVO)}/>
+            <ButtonPicker lang={Translate.t('SKOPJE')}
+                          onPress={() => onChangeCity(Citys.SKOPJE)}/>
+            <ButtonPicker lang={Translate.t('STRUGA')}
+                          onPress={() => onChangeCity(Citys.STRUGA)}/>
+            <ButtonPicker lang={Translate.t('GOSTIVAR')}
+                          onPress={() => onChangeCity(Citys.GOSTIVAR)}/>
+            <ButtonPicker lang={Translate.t('OHRID')}
+                          onPress={() => onChangeCity(Citys.OHRID)}/>
+          </ScrollView>
         </Modal>
       }
     </EngineSafeAreaView>

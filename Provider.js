@@ -1,6 +1,7 @@
 import i18n from 'i18n-js'
 import React, { useState } from 'react'
 import AsyncStorageItems from './constants/async-storage/AsyncStorageItems'
+import Citys from './constants/Citys'
 import Languages from './constants/language/Languages'
 import GlobalState from './GlobalState'
 import Router from './router/Router'
@@ -11,6 +12,8 @@ const Provider = () => {
   const [language, setLanguage] = useState(Languages.en)
   const [isLoading, setIsLoading] = useState(false)
   const [location, setLocation] = useState(null)
+  const [city, setCity] = useState(Citys.TETOVO)
+
   const onSetLanguage = lang => {
     i18n.locale = lang
     setLanguage(lang)
@@ -61,6 +64,8 @@ const Provider = () => {
       language,
       setLanguage: lang => onSetLanguage(lang),
       location,
+      city,
+      setCity: city => setCity(city),
     }}>
 
       <Router/>
