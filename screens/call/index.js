@@ -104,39 +104,8 @@ const Call = () => {
           size={20}
         />
       </View>
-      {/*<View style={{*/}
-      {/*  flexDirection: 'row',*/}
-      {/*}}>*/}
-      {/*  <TouchableHighlight*/}
-      {/*    underlayColor={'#6d2c96'}*/}
-      {/*    style={[*/}
-      {/*      {*/}
-      {/*        marginRight: 10,*/}
-      {/*      }, style.icon]}*/}
-      {/*    onPress={() => onCallPress(*/}
-      {/*      'viber://contact?number=' + item.tel)}>*/}
-      {/*    <Ionicons*/}
-      {/*      name={'ios-call'}*/}
-      {/*      color={'#6d2c96'}*/}
-      {/*      size={20}*/}
-      {/*    />*/}
-      {/*  </TouchableHighlight>*/}
-      {/*  <TouchableHighlight underlayColor={'#1fb00e'}*/}
-      {/*                      style={[*/}
-      {/*                        style.icon]}*/}
-      {/*                      onPress={() => onCallPress(*/}
-      {/*                        `tel:${item.tel}`)}>*/}
-      {/*    <Ionicons name={'ios-call'} color={'#1fb00e'} size={20}*/}
-      {/*    />*/}
-      {/*  </TouchableHighlight>*/}
-
-      {/*</View>*/}
     </TouchableOpacity>
   )
-  //
-  // const onCallPress = (app) => {
-  //   Linking.openURL(app).catch()
-  // }
 
   return (
     loading ?
@@ -157,7 +126,10 @@ const Call = () => {
                     alignItems: 'center',
                   }}>
                     <Search value={search}
-                            containerStyle={{ flex: 1 }}
+                            containerStyle={{
+                              flex: 1,
+                              justifyContent: 'center',
+                            }}
                             clearButtonMode={'while-editing'}
                             placeholder={Translate.t('Search')}
                             onChangeText={val => setSearch(val)}/>

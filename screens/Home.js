@@ -1,11 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Dimensions,
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native'
+import { Dimensions, FlatList, StyleSheet, Text, View } from 'react-native'
 import CarLight from '../components/CarLight'
 import EngineSafeAreaView from '../components/EngineSafeAreaView'
 import Search from '../components/Search'
@@ -53,7 +47,7 @@ export default function Home () {
             marginHorizontal: 10,
           }}>
             <Search value={search}
-                    containerStyle={{ flex: 1 }}
+                    containerStyle={{ flex: 1, justifyContent: 'center' }}
                     clearButtonMode={'while-editing'}
                     placeholder={Translate.t('Search')}
                     onChangeText={val => setSearch(val)}/>
