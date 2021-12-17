@@ -1,11 +1,13 @@
 import i18n from 'i18n-js'
 import React, { useState } from 'react'
 import AsyncStorageItems from './constants/async-storage/AsyncStorageItems'
+import { CityInfos } from './constants/CityInfos'
 import Citys from './constants/Citys'
 import Languages from './constants/language/Languages'
 import GlobalState from './GlobalState'
 import Router from './router/Router'
 import { multiGet, setAsyncStorage } from './services/AsyncStorageServiceImpl'
+import GeolibServiceImpl from './services/GeolibServiceImpl'
 import LocationServiceImpl from './services/LocationServiceImpl'
 
 const Provider = () => {
@@ -29,6 +31,8 @@ const Provider = () => {
               longitude: position.coords.longitude,
             }
             setLocation(myLocation)
+            let nearbyCity = GeolibServiceImpl.getNearPlace(myLocation, CityInfos)
+            setCity(nearbyCity.city)
           },
         ).catch(er => {
           console.error(er)
