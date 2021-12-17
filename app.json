@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "engine-car-management",
+    "name": "Engine - Car Management System",
     "slug": "car-lights",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -16,11 +16,12 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "com.engine",
+      "bundleIdentifier": "com.avix.engine",
       "supportsTablet": true
     },
     "android": {
-      "package": "com.engine",
+      "serviceAccountKeyPath": "./api-5340903335321893736-126657-a92ed3cbed44.json",
+      "package": "com.avix.engine",
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
@@ -40,6 +41,11 @@
           }
         }
       ]
+    },
+    "extra": {
+      "eas": {
+        "projectId": "32718172-ff3b-4fe5-9201-17542e53dc0e"
+      }
     }
   }
 }
