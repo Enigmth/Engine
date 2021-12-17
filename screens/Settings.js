@@ -1,19 +1,49 @@
 import Constants from 'expo-constants'
 import React, { useState } from 'react'
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import {
+  FlatList,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import ButtonPicker from '../components/ButtonPicker'
 import EngineSafeAreaView from '../components/EngineSafeAreaView'
 import Modal from '../components/Modal'
-import Citys from '../constants/Citys'
+import { CityInfos } from '../constants/CityInfos'
 import Languages from '../constants/language/Languages'
 import GlobalState from '../GlobalState'
+import DimensionServiceImpl from '../services/DimensionServiceImpl'
 import Translate from '../Translate'
 
+const height = DimensionServiceImpl.getHeight()
 const Settings = () => {
   const context = React.useContext(GlobalState)
   const [showLanguagePicker, setShowLanguagePicker] = useState(false)
   const [showCityPopup, setShowCityPopup] = useState(false)
+  const [search, setSearch] = useState('')
+  let flatListRef = React.useRef(null)
+  const filterCity = () => CityInfos.filter(
+    c => c.city.toUpperCase().includes(search.toUpperCase()))
+  React.useEffect(() => {
+    if (showCityPopup) {
+      const index = filterCity().findIndex(
+        c => c.city.toUpperCase() === context.city.toUpperCase())
+      try {
+        if (flatListRef && flatListRef.current !== null &&
+          (index === 0 || index)) {
+          flatListRef.scrollToIndex({
+            animated: true,
+            index: index,
+          })
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  }, [showCityPopup])
 
   const onChangeLanguage = lang => {
     context.setLanguage(lang)
@@ -26,10 +56,21 @@ const Settings = () => {
       // getByCity(updatedCity)
     }
     setShowCityPopup(false)
+    setSearch('')
   }
 
   const hideLangPicker = () => {
     setShowLanguagePicker(false)
+  }
+
+  const getItemLayout = (data, index) => {
+    return (
+      {
+        length: 50,
+        offset: 50 * index,
+        index,
+      }
+    )
   }
   return (
     <EngineSafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
@@ -72,7 +113,7 @@ const Settings = () => {
               flexDirection: 'row',
               alignItems: 'center',
             }}>
-            <Text>{Translate.t(context.city.toUpperCase())}</Text>
+            <Text>{context.city}</Text>
             <MaterialIcons name={'arrow-drop-down'} size={20}/>
           </TouchableOpacity>
         </Row>
@@ -95,20 +136,34 @@ const Settings = () => {
       }
 
       {showCityPopup &&
-        <Modal close={() => setShowCityPopup(false)}
-               containerStyle={{ minHeight: 320 }}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <ButtonPicker lang={Translate.t('TETOVO')}
-                          onPress={() => onChangeCity(Citys.TETOVO)}/>
-            <ButtonPicker lang={Translate.t('SKOPJE')}
-                          onPress={() => onChangeCity(Citys.SKOPJE)}/>
-            <ButtonPicker lang={Translate.t('STRUGA')}
-                          onPress={() => onChangeCity(Citys.STRUGA)}/>
-            <ButtonPicker lang={Translate.t('GOSTIVAR')}
-                          onPress={() => onChangeCity(Citys.GOSTIVAR)}/>
-            <ButtonPicker lang={Translate.t('OHRID')}
-                          onPress={() => onChangeCity(Citys.OHRID)}/>
-          </ScrollView>
+        <Modal close={() => {
+          setShowCityPopup(false)
+          setSearch('')
+        }
+        }
+               containerStyle={{ minHeight: height / 2 }}>
+          <View style={{ marginBottom: 5 }}>
+            <TextInput placeholder={Translate.t('Search')}
+                       onChangeText={t => setSearch(t)}/>
+          </View>
+          <FlatList data={filterCity().filter(
+            c => c.city.toUpperCase().includes(search.toUpperCase()))}
+                    ref={(ref) => {
+                      flatListRef = ref
+                    }}
+                    getItemLayout={getItemLayout}
+
+                    renderItem={({ item }) => (
+                      <ButtonPicker lang={item.city}
+                                    textStyle={[
+                                      item.city === context.city
+                                        ? { color: 'green' }
+                                        : null]}
+                                    onPress={() => onChangeCity(item.city)}
+                      />
+                    )}
+                    keyExtractor={i => i.city}
+          />
         </Modal>
       }
     </EngineSafeAreaView>

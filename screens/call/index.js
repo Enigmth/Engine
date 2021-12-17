@@ -13,12 +13,14 @@ import {
   getAsyncStorage,
   setAsyncStorage,
 } from '../../services/AsyncStorageServiceImpl'
+import DimensionServiceImpl from '../../services/DimensionServiceImpl'
 import GeolibServiceImpl from '../../services/GeolibServiceImpl'
 import MacedonianLanguageServiceImpl
   from '../../services/MacedonianLanguageServiceImpl'
 import MechanicServiceImpl from '../../services/mechanic/MechanicServiceImpl'
 import Translate from '../../Translate'
 
+const height = DimensionServiceImpl.getHeight()
 const Call = () => {
   let context = React.useContext(GlobalState)
   const [search, setSearch] = useState('')
@@ -118,8 +120,16 @@ const Call = () => {
                   </View>}
                   keyExtractor={i => i.name + i.address}
                   renderItem={({ item }) => <Item item={item}/>}
-          // contentContainerStyle={{ paddingBottom: tabBarHeight() }}
-
+                  ListEmptyComponent={() => (
+                    <View style={{
+                      flex: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      height: height - 80,
+                    }}>
+                      <Text> {Translate.t('NoDataFound')}</Text>
+                    </View>
+                  )}
         />
         {selectedInfo ? <MechanicalModal
           mechanic={selectedInfo}
