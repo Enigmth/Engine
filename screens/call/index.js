@@ -27,10 +27,17 @@ const Call = () => {
   const [selectedInfo, setSelectedInfo] = useState(null)
   const [mechanics, setMechanics] = useState([])
   const [loading, setLoading] = useState(false)
+  const [showPlacePopup, setShowPlacePopup] = useState(false)
 
   React.useEffect(() => {
     getByCity(context.city)
   }, [context.city])
+
+  React.useEffect(() => {
+    if (!context.location) {
+      setShowPlacePopup(true)
+    }
+  }, [])
 
   const getByCity = city => {
     setLoading(true)
