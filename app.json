@@ -20,7 +20,6 @@
       "supportsTablet": true
     },
     "android": {
-      "serviceAccountKeyPath": "./api-5340903335321893736-126657-a92ed3cbed44.json",
       "package": "com.avix.engine",
       "versionCode": 1,
       "adaptiveIcon": {
