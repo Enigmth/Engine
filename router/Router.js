@@ -4,7 +4,6 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import Colors from '../constants/Colors'
 import Call from '../screens/call'
 
 import Home from '../screens/Home'
