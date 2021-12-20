@@ -17,7 +17,7 @@ const Modal = props => {
     <View style={{
       position: 'absolute',
       backgroundColor: 'rgba(52, 52, 52, 0.5)',
-      justifyContent: 'center',
+      // justifyContent: 'center',
       alignItems: 'center',
       height: height,
       width: '100%',

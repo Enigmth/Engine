@@ -134,8 +134,8 @@ const Provider = () => {
           }
           }
                  containerStyle={{
-                   minHeight: placePopup === 'country' ? 100 : height / 2,
-                   flex: 1,
+                   flex: 0,
+                   minHeight: placePopup === 'city' ? 200 : null,
                  }}>
             {placePopup === 'city' &&
               <View style={{

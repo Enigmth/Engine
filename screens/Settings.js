@@ -74,7 +74,8 @@ const Settings = () => {
         </Row>
       </ScrollView>
       {showLanguagePicker &&
-        <Modal close={() => hideLangPicker()} containerStyle={{ flex: 0 }}>
+        <Modal close={() => hideLangPicker()}
+               containerStyle={{ flex: 0, alignItems: 'center', width: null }}>
           <ButtonPicker lang={'Shqip'}
                         selectedLang={context.language}
                         onPress={() => onChangeLanguage(Languages.al)}/>
