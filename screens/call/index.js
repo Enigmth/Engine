@@ -27,17 +27,11 @@ const Call = () => {
   const [selectedInfo, setSelectedInfo] = useState(null)
   const [mechanics, setMechanics] = useState([])
   const [loading, setLoading] = useState(false)
-  const [showPlacePopup, setShowPlacePopup] = useState(false)
 
   React.useEffect(() => {
     getByCity(context.city)
   }, [context.city])
 
-  React.useEffect(() => {
-    if (!context.location) {
-      setShowPlacePopup(true)
-    }
-  }, [])
 
   const getByCity = city => {
     setLoading(true)
@@ -85,7 +79,11 @@ const Call = () => {
         <Text
           style={{ fontSize: 13, color: '#484b50' }}
           adjustsFontSizeToFit={true}
-        >{item.city} {item.address}</Text>
+          numberOfLines={2}
+        >{item.city}</Text>
+        <Text style={{ fontSize: 12, color: '#484b50', marginRight: 20 }}>
+          {item.address}
+        </Text>
       </View>
       <View>
         <MaterialIcons
