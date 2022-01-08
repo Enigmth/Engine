@@ -96,7 +96,10 @@ const MechanicalModal = (props) => {
           flexDirection: 'row',
           paddingTop: 15,
         }}>
-          <CallButton name={Translate.t('Call')} icon={<TouchableHighlight
+          <CallButton
+            onPress={() => onCallPress(
+              'tel:' + mechanic.tel)}
+            name={Translate.t('Call')} icon={<TouchableHighlight
             underlayColor={'#6d2c96'}
             style={[
               {}, parkingMapStyle.icon]}
@@ -108,7 +111,10 @@ const MechanicalModal = (props) => {
               size={20}
             />
           </TouchableHighlight>}/>
-          <CallButton name={'Viber'} icon={<TouchableHighlight
+          <CallButton
+            onPress={() => onCallPress(
+              'viber://contact?number=' + mechanic.tel)}
+            name={'Viber'} icon={<TouchableHighlight
             underlayColor={'#6d2c96'}
             style={[
               {}, parkingMapStyle.icon, { padding: 0 }]}
@@ -132,37 +138,42 @@ const MechanicalModal = (props) => {
           {/*    size={20}*/}
           {/*  />*/}
           {/*</TouchableHighlight>}/>*/}
-          <CallButton name={'Message'} icon={<TouchableHighlight
-            underlayColor={'#6d2c96'}
-            style={[
-              {}, parkingMapStyle.icon]}
-            onPress={() => SmsServiceImpl.sendSMS(mechanic.tel, '')}>
-            <MaterialIcons
-              name={'sms'}
-              color={'#1fb00e'}
-              size={20}
-            />
-          </TouchableHighlight>}/>
+          <CallButton name={'Message'}
+                      onPress={() => SmsServiceImpl.sendSMS(mechanic.tel, '')}
+                      icon={<TouchableHighlight
+                        underlayColor={'#6d2c96'}
+                        style={[
+                          {}, parkingMapStyle.icon]}
+                        onPress={() => SmsServiceImpl.sendSMS(mechanic.tel,
+                          '')}>
+                        <MaterialIcons
+                          name={'sms'}
+                          color={'#1fb00e'}
+                          size={20}
+                        />
+                      </TouchableHighlight>}/>
         </View>
       </ScrollView>
     </Modal>
   )
 }
 
-const CallButton = ({ name, icon }) => {
+const CallButton = ({ name, icon, onPress }) => {
   return (
-    <View style={{
-      backgroundColor: Colors.lightGrey,
-      padding: 10,
-      borderRadius: 8,
-      flex: 1,
-      marginHorizontal: 5,
-      justifyContent: 'center',
-      alignItems: 'center',
-    }}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={{
+        backgroundColor: Colors.lightGrey,
+        padding: 10,
+        borderRadius: 8,
+        flex: 1,
+        marginHorizontal: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
       {icon}
       <Text numberOfLines={1} adjustsFontSizeToFit={true}>{name}</Text>
-    </View>
+    </TouchableOpacity>
   )
 }
 
