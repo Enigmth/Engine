@@ -17,10 +17,9 @@ import GeolibServiceImpl from './services/GeolibServiceImpl'
 import LocationServiceImpl from './services/LocationServiceImpl'
 import Translate from './Translate'
 
-const height = DimensionServiceImpl.getHeight()
+DimensionServiceImpl.getHeight()
 const Provider = () => {
   const [language, setLanguage] = useState(Languages.en)
-  const [isLoading, setIsLoading] = useState(false)
   const [location, setLocation] = useState(null)
   const [city, setCity] = useState(Citys.TETOVO)
   const [country, setCountry] = useState(Countries[0])
@@ -59,7 +58,6 @@ const Provider = () => {
 
   React.useEffect(() => {
     (async function () {
-      setIsLoading(true)
       let localData = await multiGet([AsyncStorageItems.Language])
       let lang = localData[0][1]
       if (!lang) {
@@ -67,7 +65,6 @@ const Provider = () => {
       }
       onSetLanguage(lang)
       getCurrentLocation()
-      setIsLoading(false)
     })()
     return () => {
       try {
