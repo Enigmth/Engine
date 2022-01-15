@@ -572,4 +572,9 @@ export const CarLightsMk = [
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-water-fluid-filter.jpg',
     'image_path': require('../assets/car-light/Water_Fluid_Filter_Warning.jpg'),
   },
+  {
+    'name': 'Paralajmërim për nivelin e ulët të vajit të motorit',
+    'description': 'Покажува дека нивото на моторното масло е намалено под долната прифатлива граница. Кога ќе го стартувате моторот, предупредувачкото светло за ниско ниво на масло треба накратко да светне, а потоа да се исклучи. Ако не се исклучи, нивото на маслото е или прениско или има проблем со системот на сензорот за нивото на маслото',
+    'image_path': require('../assets/car-light/ENGINE_LOW_OIL.jpeg'),
+  },
 ]

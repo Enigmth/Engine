@@ -572,4 +572,9 @@ export const CarLightsAl = [
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-water-fluid-filter.jpg',
     'image_path': require('../assets/car-light/Water_Fluid_Filter_Warning.jpg'),
   },
+  {
+    'name': 'Paralajmërim për nivelin e ulët të vajit të motorit',
+    'description': 'Tregon që niveli i vajit të motorit është ulur nën kufirin e poshtëm të pranueshëm. Kur ndizni motorin, drita paralajmëruese e nivelit të ulët të vajit duhet të ndizet për një kohë të shkurtër dhe më pas të fiket. Nëse nuk fiket, niveli i vajit është ose shumë i ulët ose ka një problem me sistemin e sensorit të nivelit të vajit',
+    'image_path': require('../assets/car-light/ENGINE_LOW_OIL.jpeg'),
+  },
 ]
