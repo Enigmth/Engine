@@ -8,13 +8,17 @@ i18n.translations = {
   al: require('./language/al.json'),
   mk: require('./language/mk.json'),
 }
-// console.log(i18n.currentLocale());
-// console.log(Localization.locale);
+
+console.log(i18n.currentLocale())
+console.log(Localization.locale)
 if (Localization.locale.includes('al')) {
   i18n.locale = 'al'
+} else if (Localization.locale.includes('mk')) {
+  i18n.locale = 'mk'
 } else {
-  i18n.locale = Localization.locale
+  i18n.locale = 'en'
 }
+console.log(i18n.locale)
 // Set the locale once at the beginning of your app.
 // When a value is missing from a language it'll fallback to another language with the key present.
 i18n.fallbacks = true

@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import { DarkTheme, MyTheme } from '../constants/Theme'
 import Call from '../screens/call'
 
 import Home from '../screens/Home'
@@ -71,9 +72,9 @@ const TabScreen = () => {
 
 const Stack = createStackNavigator()
 
-export default () => {
+export default ({ isDarkMode }) => {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={isDarkMode ? DarkTheme : MyTheme}>
       <Stack.Navigator>
         <Stack.Screen
           name="TabScreen"

@@ -1,3 +1,4 @@
+import { useTheme } from '@react-navigation/native'
 import React, { useState } from 'react'
 import { Dimensions, FlatList, StyleSheet, Text, View } from 'react-native'
 import CarLight from '../components/CarLight'
@@ -12,8 +13,8 @@ import MacedonianLanguageServiceImpl
 import Translate from '../Translate'
 
 const { height } = Dimensions.get('window')
-
 export default function Home () {
+  const { colors } = useTheme()
   const context = React.useContext(GlobalState)
   const [search, setSearch] = useState('')
   const getCarLights = () => {
@@ -31,8 +32,11 @@ export default function Home () {
         return carLights
     }
   }
+
+  console.log(colors)
   return (
-    <EngineSafeAreaView style={[styles.container]}>
+    <EngineSafeAreaView
+      style={[styles.container, { backgroundColor: colors.background }]}>
       <FlatList
         data={getCarLights().filter(
           cl => cl.name.toUpperCase().includes(search.toUpperCase()) ||
@@ -42,7 +46,7 @@ export default function Home () {
         stickyHeaderIndices={[0]}
         ListHeaderComponent={
           <View style={{
-            backgroundColor: 'white', height: 40,
+            backgroundColor: colors.background, height: 40,
             paddingBottom: 5,
             marginHorizontal: 10,
           }}>
@@ -59,7 +63,8 @@ export default function Home () {
             alignItems: 'center',
             height: height - 60,
           }}>
-          <Text>{Translate.t('NoDataFound')}</Text>
+          <Text style={{ color: colors.text }}>{Translate.t(
+            'NoDataFound')}</Text>
         </View>}
         // contentContainerStyle={{ paddingBottom: tabBarHeight() }}
         initialNumToRender={16}
@@ -70,6 +75,6 @@ export default function Home () {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, backgroundColor: '#fff', paddingVertical: 10,
+    flex: 1, paddingVertical: 10,
   },
 })

@@ -1,3 +1,4 @@
+import { useTheme } from '@react-navigation/native'
 import React from 'react'
 import {
   Linking,
@@ -23,13 +24,16 @@ const MechanicalModal = (props) => {
   const { mechanic } = props
   const latitude = mechanic.latitude ? mechanic.latitude : 42.008361
   const longitude = mechanic.longitude ? mechanic.longitude : 20.973641
+  const { colors } = useTheme()
+
   const onCallPress = (app) => {
     Linking.openURL(app).catch()
   }
   return (
-    <Modal animationType={'slide'}>
+    <Modal animationType={'slide'}
+           style={{ backgroundColor: colors.background }}>
       <SafeAreaView style={{
-        backgroundColor: Colors.lightGrey,
+        backgroundColor: colors.background,
       }}>
         <View style={{
           height: 50,
@@ -37,22 +41,28 @@ const MechanicalModal = (props) => {
           flexDirection: 'row',
           paddingHorizontal: 15,
           alignItems: 'center',
+          backgroundColor: colors.background,
         }}>
           <TouchableOpacity onPress={props.onPress}>
-            <Text>{Translate.t('Close')}</Text>
+            <Text style={{ color: colors.text, width: 60 }}>{Translate.t(
+              'Close')}</Text>
           </TouchableOpacity>
 
-          <Text style={{ fontWeight: 'bold' }}>{mechanic.name}</Text>
+          <Text style={{
+            fontWeight: 'bold',
+            color: colors.text,
+          }}>{mechanic.name}</Text>
 
-          <Text style={{ color: 'transparent' }}>{Translate.t('Close')}</Text>
+          <Text style={{ color: 'transparent', width: 60 }}></Text>
 
         </View>
       </SafeAreaView>
 
       <ScrollView style={{
         flexDirection: 'column',
-        marginHorizontal: 15,
+        // marginHorizontal: 15,
         paddingTop: 10,
+        backgroundColor: colors.background,
       }}>
         <MapView
           style={parkingMapStyle.map}
@@ -97,6 +107,8 @@ const MechanicalModal = (props) => {
           paddingTop: 15,
         }}>
           <CallButton
+            textColor={colors.text}
+            color={colors.card}
             onPress={() => onCallPress(
               'tel:' + mechanic.tel)}
             name={Translate.t('Call')} icon={<TouchableHighlight
@@ -112,6 +124,8 @@ const MechanicalModal = (props) => {
             />
           </TouchableHighlight>}/>
           <CallButton
+            textColor={colors.text}
+            color={colors.card}
             onPress={() => onCallPress(
               'viber://contact?number=' + mechanic.tel)}
             name={'Viber'} icon={<TouchableHighlight
@@ -139,6 +153,8 @@ const MechanicalModal = (props) => {
           {/*  />*/}
           {/*</TouchableHighlight>}/>*/}
           <CallButton name={'Message'}
+                      textColor={colors.text}
+                      color={colors.card}
                       onPress={() => SmsServiceImpl.sendSMS(mechanic.tel, '')}
                       icon={<TouchableHighlight
                         underlayColor={'#6d2c96'}
@@ -158,12 +174,12 @@ const MechanicalModal = (props) => {
   )
 }
 
-const CallButton = ({ name, icon, onPress }) => {
+const CallButton = ({ name, icon, onPress, color, textColor }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
       style={{
-        backgroundColor: Colors.lightGrey,
+        backgroundColor: color,
         padding: 10,
         borderRadius: 8,
         flex: 1,
@@ -172,7 +188,8 @@ const CallButton = ({ name, icon, onPress }) => {
         alignItems: 'center',
       }}>
       {icon}
-      <Text numberOfLines={1} adjustsFontSizeToFit={true}>{name}</Text>
+      <Text numberOfLines={1} style={{ color: textColor }}
+            adjustsFontSizeToFit={true}>{name}</Text>
     </TouchableOpacity>
   )
 }
@@ -189,6 +206,7 @@ const parkingMapStyle = StyleSheet.create({
     shadowRadius: 2,
     height: height / 1.7,
     borderRadius: 8,
+    marginHorizontal: 10,
   },
 
   markerContainer: {

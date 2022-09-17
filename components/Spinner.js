@@ -1,18 +1,22 @@
+import { useTheme } from '@react-navigation/native'
 import React from 'react'
-import { Text, View, ActivityIndicator } from 'react-native'
+import { ActivityIndicator, Text, View } from 'react-native'
 import Colors from '../constants/Colors'
 
 const PageLoading = props => {
+  const { colors } = useTheme()
+
   return (
     <View style={[
       {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'white',
+        backgroundColor: colors.background,
       }, props.isAbsolute ? style : null]}>
-      <Text style={{ color: 'black',marginBottom:10 }}>{props.message}</Text>
-      <ActivityIndicator color={'black'}/>
+      <Text
+        style={{ color: colors.text, marginBottom: 10 }}>{props.message}</Text>
+      <ActivityIndicator color={colors.text}/>
     </View>)
 }
 

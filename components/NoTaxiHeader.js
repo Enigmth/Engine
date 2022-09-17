@@ -1,3 +1,4 @@
+import { useTheme } from '@react-navigation/native'
 import React from 'react'
 import {
   LayoutAnimation,
@@ -14,6 +15,7 @@ import Search from './Search'
 
 const Header = (props) => {
   let searchRef = React.useRef()
+  const { colors } = useTheme()
   const {
     transparent,
   } = props
@@ -21,11 +23,12 @@ const Header = (props) => {
     <SafeAreaView
       style={[
         style.safeAreaStyle,
+        { backgroundColor: colors.background },
         { paddingTop: isIos() ? 0 : StatusBar.currentHeight },
         transparent ? {
           position: 'absolute',
           top: HeaderComponentServiceImpl.getMarginTop(),
-        } : { backgroundColor: 'white' }]}>
+        } : { backgroundColor: colors.background }]}>
       <View
         style={{
           flexDirection: 'row',
@@ -36,22 +39,6 @@ const Header = (props) => {
           paddingVertical: 10,
           marginHorizontal: 10,
         }}>
-        {/*<TouchableOpacity*/}
-        {/*  style={{ width: 60 }}*/}
-        {/*  onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>*/}
-        {/*  <View*/}
-        {/*    // style={{ marginLeft: 10 }}*/}
-        {/*  >*/}
-        {/*    <DrawerIcon*/}
-        {/*      itemColor={props.textColor ? props.textColor : Colors.red}*/}
-        {/*      style={[*/}
-        {/*        style.navigateBackIcon, {*/}
-        {/*          // backgroundColor: backgroundColor,*/}
-        {/*          height: 15,*/}
-        {/*          width: 25,*/}
-        {/*        }]}/>*/}
-        {/*  </View>*/}
-        {/*</TouchableOpacity>*/}
         {props.search &&
           <Search
             searchRef={r => searchRef = r}

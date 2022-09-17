@@ -1,6 +1,7 @@
+import { useTheme } from '@react-navigation/native'
 import Constants from 'expo-constants'
 import React, { useState } from 'react'
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { ScrollView, Switch, Text, TouchableOpacity, View } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import ButtonPicker from '../components/ButtonPicker'
 import EngineSafeAreaView from '../components/EngineSafeAreaView'
@@ -14,6 +15,7 @@ DimensionServiceImpl.getHeight()
 const Settings = () => {
   const context = React.useContext(GlobalState)
   const [showLanguagePicker, setShowLanguagePicker] = useState(false)
+  const { colors } = useTheme()
 
   const onChangeLanguage = lang => {
     context.setLanguage(lang)
@@ -25,7 +27,7 @@ const Settings = () => {
   }
 
   return (
-    <EngineSafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+    <EngineSafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
       <View
         style={{
           height: 50,
@@ -34,16 +36,16 @@ const Settings = () => {
           borderBottomWidth: .3,
           borderBottomColor: 'grey',
         }}>
-        <Text>{Translate.t('Settings')}</Text>
+        <Text style={{ color: colors.text }}>{Translate.t('Settings')}</Text>
       </View>
       <ScrollView
         style={{
           flex: 1,
           flexDirection: 'column',
           padding: 15,
-          backgroundColor: 'white',
+          backgroundColor: colors.background,
         }}>
-        <Row name={Translate.t('Language')}>
+        <Row textColor={colors.text} name={Translate.t('Language')}>
 
           <TouchableOpacity
             onPress={() => {
@@ -54,23 +56,31 @@ const Settings = () => {
               flexDirection: 'row',
               alignItems: 'center',
             }}>
-            <Text>{Translate.t('Label')}</Text>
-            <MaterialIcons name={'arrow-drop-down'} size={20}/>
+            <Text style={{ color: colors.text }}>{Translate.t('Label')}</Text>
+            <MaterialIcons color={colors.text} name={'arrow-drop-down'}
+                           size={20}/>
           </TouchableOpacity>
         </Row>
-        <Row name={Translate.t('City')}>
+        <Row textColor={colors.text} name={Translate.t('City')}>
           <TouchableOpacity
             onPress={() => context.setPlacePopup('city')}
             style={{
               flexDirection: 'row',
               alignItems: 'center',
             }}>
-            <Text>{context.city}</Text>
-            <MaterialIcons name={'arrow-drop-down'} size={20}/>
+            <Text style={{ color: colors.text }}>{context.city}</Text>
+            <MaterialIcons color={colors.text} name={'arrow-drop-down'}
+                           size={20}/>
           </TouchableOpacity>
         </Row>
-        <Row name={Translate.t('Version')}>
-          <Text>{Constants.manifest.version}</Text>
+        <Row textColor={colors.text} name={Translate.t('Version')}>
+          <Text
+            style={{ color: colors.text }}>{Constants.manifest.version}</Text>
+        </Row>
+
+        <Row textColor={colors.text} name={Translate.t('DarkMode')}>
+          <Switch value={context.isDarkMode}
+                  onChange={(val) => context.setDarkMode(!context.isDarkMode)}/>
         </Row>
       </ScrollView>
       {showLanguagePicker &&
@@ -87,38 +97,6 @@ const Settings = () => {
                         onPress={() => onChangeLanguage(Languages.mk)}/>
         </Modal>
       }
-
-      {/*{showCityPopup &&*/}
-      {/*  <Modal close={() => {*/}
-      {/*    context.setPlacePopup(null)*/}
-      {/*    setSearch('')*/}
-      {/*  }*/}
-      {/*  }*/}
-      {/*         containerStyle={{ minHeight: height / 2 }}>*/}
-      {/*    <View style={{ marginBottom: 5 }}>*/}
-      {/*      <TextInput placeholder={Translate.t('Search')}*/}
-      {/*                 onChangeText={t => setSearch(t)}/>*/}
-      {/*    </View>*/}
-      {/*    <FlatList data={filterCity().filter(*/}
-      {/*      c => c.city.toUpperCase().includes(search.toUpperCase()))}*/}
-      {/*              ref={(ref) => {*/}
-      {/*                flatListRef = ref*/}
-      {/*              }}*/}
-      {/*              getItemLayout={getItemLayout}*/}
-
-      {/*              renderItem={({ item }) => (*/}
-      {/*                <ButtonPicker lang={item.city}*/}
-      {/*                              textStyle={[*/}
-      {/*                                item.city === context.city*/}
-      {/*                                  ? { color: 'green' }*/}
-      {/*                                  : null]}*/}
-      {/*                              onPress={() => onChangeCity(item.city)}*/}
-      {/*                />*/}
-      {/*              )}*/}
-      {/*              keyExtractor={i => i.city}*/}
-      {/*    />*/}
-      {/*  </Modal>*/}
-      {/*}*/}
     </EngineSafeAreaView>
   )
 }
@@ -133,7 +111,7 @@ const Row = (props) => {
       paddingVertical: 10,
       alignItems: 'center',
     }}>
-      <Text>{props.name}</Text>
+      <Text style={{ color: props.textColor }}>{props.name}</Text>
       {props.children}
     </View>
   )

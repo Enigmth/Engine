@@ -11,4 +11,8 @@ export default {
   drawerLightDark: '#171a1f',
   darkWhite: '#fbfbfc',
   defaultGrey: '#ECF0F1',
+  lightDarkTransparent: 'rgba(96,97,98,0.2)',
+  lightDarkTransparent2: 'rgba(70,71,73,0.2)',
+  modalBorderDark: '#dadedf',
+  modalBorderWhite: '#ECF0F1',
 }

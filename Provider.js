@@ -18,6 +18,7 @@ import LocationServiceImpl from './services/LocationServiceImpl'
 import Translate from './Translate'
 
 DimensionServiceImpl.getHeight()
+
 const Provider = () => {
   const [language, setLanguage] = useState(Languages.en)
   const [location, setLocation] = useState(null)
@@ -25,7 +26,7 @@ const Provider = () => {
   const [country, setCountry] = useState(Countries[0])
   const [placePopup, setPlacePopup] = useState(null)
   const [search, setSearch] = useState('')
-
+  const [isDarkMode, setIsDarkMode] = useState(false)
   const onSetLanguage = lang => {
     i18n.locale = lang
     setLanguage(lang)
@@ -121,9 +122,11 @@ const Provider = () => {
         setCountry: country => setCountry(country),
         placePopup,
         setPlacePopup: popup => setPlacePopup(popup),
+        isDarkMode,
+        setDarkMode: val => setIsDarkMode(val),
       }}>
 
-        <Router/>
+        <Router isDarkMode={isDarkMode}/>
         {placePopup &&
           <Modal close={() => {
             setPlacePopup(null)

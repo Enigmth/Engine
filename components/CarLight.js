@@ -1,7 +1,9 @@
+import { useTheme } from '@react-navigation/native'
 import React from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
 
 const CarLight = ({ carLight }) => {
+  const { colors } = useTheme()
 
   return (
     <TouchableOpacity style={{
@@ -11,6 +13,7 @@ const CarLight = ({ carLight }) => {
       // backgroundColor: '#ECF0F1',
       borderBottomColor: '#2e3136',
       borderBottomWidth: .3,
+      backgroundColor: colors.background,
     }}>
       <View style={{ justifyContent: 'center' }}>
         <Image source={carLight.image_path}
@@ -18,11 +21,15 @@ const CarLight = ({ carLight }) => {
       </View>
       <View style={{ flexDirection: 'column', paddingLeft: 10, flex: 1 }}>
         <Text
-          style={{ fontWeight: 'bold', fontSize: 14 }}>{carLight.name}</Text>
+          style={{
+            fontWeight: 'bold',
+            fontSize: 14,
+            color: colors.text,
+          }}>{carLight.name}</Text>
         <Text style={{
           fontSize: 13,
           paddingTop: 5,
-          color: '#484b50',
+          color: colors.text,
         }}>{carLight.description}</Text>
       </View>
 

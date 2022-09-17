@@ -1,3 +1,4 @@
+import { useTheme } from '@react-navigation/native'
 import React from 'react'
 import { LayoutAnimation, TouchableOpacity, View } from 'react-native'
 import DimensionServiceImpl from '../services/DimensionServiceImpl'
@@ -13,6 +14,8 @@ const Modal = props => {
     LayoutAnimation.easeInEaseOut()
     props.close()
   }
+  const { colors } = useTheme()
+
   return (
     <View style={{
       position: 'absolute',
@@ -35,7 +38,7 @@ const Modal = props => {
         style={{
           // justifyContent: 'center',
           // alignItems: 'center',
-          backgroundColor: 'white',
+          backgroundColor: colors.card,
           padding: 20,
           borderRadius: 8,
           // height: height / 1.5,

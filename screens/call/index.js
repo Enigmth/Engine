@@ -1,3 +1,4 @@
+import { useTheme } from '@react-navigation/native'
 import React, { useState } from 'react'
 import { FlatList, Text, TouchableOpacity, View } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -27,11 +28,11 @@ const Call = () => {
   const [selectedInfo, setSelectedInfo] = useState(null)
   const [mechanics, setMechanics] = useState([])
   const [loading, setLoading] = useState(false)
+  const { colors } = useTheme()
 
   React.useEffect(() => {
     getByCity(context.city)
   }, [context.city])
-
 
   const getByCity = city => {
     setLoading(true)
@@ -70,18 +71,19 @@ const Call = () => {
         borderBottomColor: '#2e3136',
         borderBottomWidth: .3,
         alignItems: 'center',
+        backgroundColor: colors.background,
       }}>
       <View>
         <Text
-          style={{ fontWeight: 'bold', fontSize: 14 }}
+          style={{ fontWeight: 'bold', fontSize: 14, color: colors.text }}
           adjustsFontSizeToFit={true}
         >{item.name}</Text>
         <Text
-          style={{ fontSize: 13, color: '#484b50' }}
+          style={{ fontSize: 13, color: colors.text }}
           adjustsFontSizeToFit={true}
           numberOfLines={2}
         >{item.city}</Text>
-        <Text style={{ fontSize: 12, color: '#484b50', marginRight: 20 }}>
+        <Text style={{ fontSize: 12, color: colors, marginRight: 20 }}>
           {item.address}
         </Text>
       </View>
@@ -99,18 +101,22 @@ const Call = () => {
     loading ?
       <PageLoading message={Translate.t('FetchingData')}/> :
       <EngineSafeAreaView
-        style={{ flex: 1, backgroundColor: 'white', paddingVertical: 10 }}>
+        style={{
+          flex: 1,
+          backgroundColor: colors.background,
+          paddingVertical: 10,
+        }}>
         <FlatList data={mechanics.
           filter(d => d.name.toUpperCase().includes(search.toUpperCase()) ||
             context.language === 'mk' && d.name.toUpperCase().
               includes(
                 MacedonianLanguageServiceImpl.convert(search.toUpperCase())))}
-                  style={{ backgroundColor: 'white' }}
+                  style={{ backgroundColor: colors.background }}
                   stickyHeaderIndices={[0]}
                   ListHeaderComponent={<View style={{
-                    backgroundColor: 'white', height: 40,
+                    backgroundColor: colors.background, height: 40,
                     paddingBottom: 5,
-                    marginHorizontal: 10,
+                    paddingHorizontal: 10,
                     flexDirection: 'row',
                     alignItems: 'center',
                   }}>
@@ -131,8 +137,10 @@ const Call = () => {
                       justifyContent: 'center',
                       alignItems: 'center',
                       height: height - 80,
+                      backgroundColor: colors.background,
                     }}>
-                      <Text> {Translate.t('NoDataFound')}</Text>
+                      <Text style={{ color: colors.text }}> {Translate.t(
+                        'NoDataFound')}</Text>
                     </View>
                   )}
         />
