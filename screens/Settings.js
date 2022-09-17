@@ -80,7 +80,7 @@ const Settings = () => {
 
         <Row textColor={colors.text} name={Translate.t('DarkMode')}>
           <Switch value={context.isDarkMode}
-                  onChange={(val) => context.setDarkMode(!context.isDarkMode)}/>
+                  onChange={() => context.setDarkMode(!context.isDarkMode)}/>
         </Row>
       </ScrollView>
       {showLanguagePicker &&

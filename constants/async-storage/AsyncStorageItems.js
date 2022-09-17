@@ -1,5 +1,5 @@
 export default {
   Language: 'language',
-  Theme: 'theme',
-  Mechanics:'mechanics'
+  IsDarkTheme: 'is_dark_theme',
+  Mechanics: 'mechanics',
 }

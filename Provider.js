@@ -1,3 +1,5 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import * as SplashScreen from 'expo-splash-screen'
 import i18n from 'i18n-js'
 import React, { useState } from 'react'
 import { FlatList, LayoutAnimation, TextInput, View } from 'react-native'
@@ -59,16 +61,27 @@ const Provider = () => {
 
   React.useEffect(() => {
     (async function () {
-      let localData = await multiGet([AsyncStorageItems.Language])
+      let localData = await multiGet(
+        [AsyncStorageItems.Language, AsyncStorageItems.IsDarkTheme])
       let lang = localData[0][1]
       if (!lang) {
         lang = Languages.en
       }
+      let isDarkTheme = localData[1][1]
+      if (!isDarkTheme) {
+        isDarkTheme = false
+      }
+      triggerDarkTheme(isDarkTheme === 'true')
       onSetLanguage(lang)
       getCurrentLocation()
+      try {
+        await SplashScreen.hideAsync()
+      } catch (e) {
+      }
     })()
     return () => {
       try {
+        // Appearance.remove()
       } catch (e) {
       }
     }
@@ -110,6 +123,13 @@ const Provider = () => {
     setPlacePopup(place)
   }
 
+  const triggerDarkTheme = (isDark) => {
+    setIsDarkMode(isDark)
+    AsyncStorage.setItem(AsyncStorageItems.IsDarkTheme, String(isDark)).
+      then().
+      catch()
+  }
+
   return (
     <>
       <GlobalState.Provider value={{
@@ -123,7 +143,7 @@ const Provider = () => {
         placePopup,
         setPlacePopup: popup => setPlacePopup(popup),
         isDarkMode,
-        setDarkMode: val => setIsDarkMode(val),
+        setDarkMode: (val) => triggerDarkTheme(val),
       }}>
 
         <Router isDarkMode={isDarkMode}/>
