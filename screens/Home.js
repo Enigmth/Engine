@@ -1,6 +1,7 @@
 import { useTheme } from '@react-navigation/native'
+import { FlashList } from '@shopify/flash-list'
 import React, { useState } from 'react'
-import { Dimensions, FlatList, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, StyleSheet, Text, View } from 'react-native'
 import CarLight from '../components/CarLight'
 import EngineSafeAreaView from '../components/EngineSafeAreaView'
 import Search from '../components/Search'
@@ -37,25 +38,27 @@ export default function Home () {
   return (
     <EngineSafeAreaView
       style={[styles.container, { backgroundColor: colors.background }]}>
-      <FlatList
+      <View style={{
+        backgroundColor: colors.background, height: 40,
+        paddingBottom: 5,
+        marginHorizontal: 10,
+      }}>
+        <Search value={search}
+                containerStyle={{ flex: 1, justifyContent: 'center' }}
+                clearButtonMode={'while-editing'}
+                placeholder={Translate.t('Search')}
+                onChangeText={val => setSearch(val)}/>
+      </View>
+      <FlashList
+        estimatedItemSize={50}
         data={getCarLights().filter(
           cl => cl.name.toUpperCase().includes(search.toUpperCase()) ||
             context.language === 'mk' && cl.name.toUpperCase().
               includes(
                 MacedonianLanguageServiceImpl.convert(search.toUpperCase())))}
-        stickyHeaderIndices={[0]}
-        ListHeaderComponent={
-          <View style={{
-            backgroundColor: colors.background, height: 40,
-            paddingBottom: 5,
-            marginHorizontal: 10,
-          }}>
-            <Search value={search}
-                    containerStyle={{ flex: 1, justifyContent: 'center' }}
-                    clearButtonMode={'while-editing'}
-                    placeholder={Translate.t('Search')}
-                    onChangeText={val => setSearch(val)}/>
-          </View>}
+        // stickyHeaderIndices={[0]}
+        // ListHeaderComponent={
+        //   }
         ListEmptyComponent={<View
           style={{
             flex: 1,

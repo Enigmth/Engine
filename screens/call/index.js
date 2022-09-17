@@ -1,6 +1,7 @@
 import { useTheme } from '@react-navigation/native'
+import { FlashList } from '@shopify/flash-list'
 import React, { useState } from 'react'
-import { FlatList, Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import EngineSafeAreaView from '../../components/EngineSafeAreaView'
 import MechanicalModal from '../../components/MechanicalModal'
@@ -106,43 +107,47 @@ const Call = () => {
           backgroundColor: colors.background,
           paddingVertical: 10,
         }}>
-        <FlatList data={mechanics.
-          filter(d => d.name.toUpperCase().includes(search.toUpperCase()) ||
-            context.language === 'mk' && d.name.toUpperCase().
-              includes(
-                MacedonianLanguageServiceImpl.convert(search.toUpperCase())))}
-                  style={{ backgroundColor: colors.background }}
-                  stickyHeaderIndices={[0]}
-                  ListHeaderComponent={<View style={{
-                    backgroundColor: colors.background, height: 40,
-                    paddingBottom: 5,
-                    paddingHorizontal: 10,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}>
-                    <Search value={search}
-                            containerStyle={{
-                              flex: 1,
-                              justifyContent: 'center',
-                            }}
-                            clearButtonMode={'while-editing'}
-                            placeholder={Translate.t('Search')}
-                            onChangeText={val => setSearch(val)}/>
-                  </View>}
-                  keyExtractor={i => i.name + i.address}
-                  renderItem={({ item }) => <Item item={item}/>}
-                  ListEmptyComponent={() => (
-                    <View style={{
-                      flex: 1,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      height: height - 80,
-                      backgroundColor: colors.background,
-                    }}>
-                      <Text style={{ color: colors.text }}> {Translate.t(
-                        'NoDataFound')}</Text>
-                    </View>
-                  )}
+        <View style={{
+          backgroundColor: colors.background, height: 40,
+          paddingBottom: 5,
+          paddingHorizontal: 10,
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}>
+          <Search value={search}
+                  containerStyle={{
+                    flex: 1,
+                    justifyContent: 'center',
+                  }}
+                  clearButtonMode={'while-editing'}
+                  placeholder={Translate.t('Search')}
+                  onChangeText={val => setSearch(val)}/>
+        </View>
+        <FlashList
+          estimatedItemSize={20}
+          data={mechanics.
+            filter(d => d.name.toUpperCase().includes(search.toUpperCase()) ||
+              context.language === 'mk' && d.name.toUpperCase().
+                includes(
+                  MacedonianLanguageServiceImpl.convert(search.toUpperCase())))}
+
+          contentContainerStyle={{ backgroundColor: colors.background }}
+          // stickyHeaderIndices={[0]}
+          // ListHeaderComponent={}
+          keyExtractor={i => i.name + i.address}
+          renderItem={({ item }) => <Item item={item}/>}
+          ListEmptyComponent={() => (
+            <View style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: height - 80,
+              backgroundColor: colors.background,
+            }}>
+              <Text style={{ color: colors.text }}> {Translate.t(
+                'NoDataFound')}</Text>
+            </View>
+          )}
         />
         {selectedInfo ? <MechanicalModal
           mechanic={selectedInfo}
