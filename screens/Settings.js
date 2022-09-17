@@ -85,14 +85,21 @@ const Settings = () => {
       </ScrollView>
       {showLanguagePicker &&
         <Modal close={() => hideLangPicker()}
-               containerStyle={{ flex: 0, alignItems: 'center', width: null }}>
+               containerStyle={{
+                 flex: 0,
+                 alignItems: 'center',
+                 backgroundColor: colors.background,
+               }}>
           <ButtonPicker lang={'Shqip'}
+                        textStyle={{ color: colors.text }}
                         selectedLang={context.language}
                         onPress={() => onChangeLanguage(Languages.al)}/>
           <ButtonPicker lang={'English'}
+                        textStyle={{ color: colors.text }}
                         selectedLang={context.language}
                         onPress={() => onChangeLanguage(Languages.en)}/>
           <ButtonPicker lang={'Makeдoнckи'}
+                        textStyle={{ color: colors.text }}
                         selectedLang={context.language}
                         onPress={() => onChangeLanguage(Languages.mk)}/>
         </Modal>

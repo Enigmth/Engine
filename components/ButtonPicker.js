@@ -1,13 +1,12 @@
 import React from 'react'
-import { TouchableOpacity, Text } from 'react-native'
-import Colors from '../constants/Colors'
+import { Text, TouchableOpacity } from 'react-native'
 
 const ButtonPicker = props => {
   return (
     <TouchableOpacity style={{
-      padding: 10,
-      backgroundColor: Colors.defaultGrey,
-      margin: 10,
+      padding: 8,
+      // backgroundColor: Colors.defaultGrey,
+      margin: 8,
       width: 200,
       justifyContent: 'center',
       alignItems: 'center',

@@ -1,14 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { FlashList } from '@shopify/flash-list'
 import * as SplashScreen from 'expo-splash-screen'
 import i18n from 'i18n-js'
 import React, { useState } from 'react'
-import {
-  Appearance,
-  FlatList,
-  LayoutAnimation,
-  TextInput,
-  View,
-} from 'react-native'
+import { Appearance, LayoutAnimation, TextInput, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import ButtonPicker from './components/ButtonPicker'
 import Modal from './components/Modal'
@@ -17,16 +12,14 @@ import { CityCountryInfo } from './constants/CityCountryInfo'
 import Citys from './constants/Citys'
 import { Countries } from './constants/Countries'
 import Languages from './constants/language/Languages'
+import { DarkTheme, MyTheme } from './constants/Theme'
 import ThemeTypes from './constants/ThemeTypes'
 import GlobalState from './GlobalState'
 import Router from './router/Router'
 import { multiGet, setAsyncStorage } from './services/AsyncStorageServiceImpl'
-import DimensionServiceImpl from './services/DimensionServiceImpl'
 import GeolibServiceImpl from './services/GeolibServiceImpl'
 import LocationServiceImpl from './services/LocationServiceImpl'
 import Translate from './Translate'
-
-DimensionServiceImpl.getHeight()
 
 const Provider = () => {
   const [language, setLanguage] = useState(Languages.en)
@@ -36,6 +29,8 @@ const Provider = () => {
   const [placePopup, setPlacePopup] = useState(null)
   const [search, setSearch] = useState('')
   const [isDarkMode, setIsDarkMode] = useState(false)
+  const [themeColors, setThemeColors] = useState(
+    isDarkMode ? DarkTheme.colors : MyTheme.colors)
   const onSetLanguage = lang => {
     i18n.locale = lang
     setLanguage(lang)
@@ -136,6 +131,7 @@ const Provider = () => {
 
   const triggerDarkTheme = (isDark) => {
     setIsDarkMode(isDark)
+    setThemeColors(isDark ? DarkTheme.colors : MyTheme.colors)
     AsyncStorage.setItem(AsyncStorageItems.IsDarkTheme, String(isDark)).
       then().
       catch()
@@ -158,7 +154,7 @@ const Provider = () => {
       }}>
 
         <Router isDarkMode={isDarkMode}/>
-        {placePopup &&
+        {placePopup != null &&
           <Modal close={() => {
             setPlacePopup(null)
             setSearch('')
@@ -166,26 +162,32 @@ const Provider = () => {
           }
                  containerStyle={{
                    flex: 0,
-                   minHeight: placePopup === 'city' ? 200 : null,
+                   minHeight: 270,
+                   backgroundColor: themeColors.background,
                  }}>
             {placePopup === 'city' &&
               <View style={{
                 marginBottom: 5,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
+                backgroundColor: themeColors.background,
               }}>
                 <Ionicons name={'chevron-back-outline'} size={18}
+                          color={themeColors.text}
                           onPress={() => {
                             setPlaceModal('country')
                           }
                           }/>
                 <TextInput placeholder={Translate.t('Search')}
-                           style={{ paddingRight: 10 }}
+                           placeholderTextColor={themeColors.text}
+                           style={{ paddingRight: 10, color: themeColors.text }}
                            onChangeText={t => setSearch(t)}/>
                 <View/>
               </View>}
             {placePopup === 'country' ?
-              <FlatList
+              <FlashList
+                estimatedItemSize={5}
+                contentContainerStyle={{ backgroundColor: themeColors.background }}
                 data={Countries.filter(
                   c => c.toUpperCase().includes(search.toUpperCase()))}
                 renderItem={({ item }) => (
@@ -197,7 +199,7 @@ const Provider = () => {
                                 textStyle={[
                                   item === country
                                     ? { color: 'green' }
-                                    : null]}
+                                    : { color: themeColors.text }]}
                                 onPress={() => {
                                   setCountry(item)
                                   setPlaceModal('city')
@@ -208,7 +210,9 @@ const Provider = () => {
                 keyExtractor={i => i}
               /> :
 
-              <FlatList
+              <FlashList
+                estimatedItemSize={20}
+                contentContainerStyle={{ backgroundColor: themeColors.background }}
                 data={CityCountryInfo.filter(c => c.country === country &&
                   c.city.toUpperCase().includes(search.toUpperCase()))}
 
@@ -221,11 +225,12 @@ const Provider = () => {
                                 style={{
                                   alignSelf: 'center',
                                   justifyContent: 'center',
+                                  backgroundColor: themeColors.background,
                                 }}
                                 textStyle={[
                                   item.city === city
                                     ? { color: 'green' }
-                                    : null]}
+                                    : { color: themeColors.text }]}
                                 onPress={() => {
                                   setCity(item.city)
                                   setPlaceModal(null)
@@ -233,14 +238,6 @@ const Provider = () => {
                                 }}
                   />
                 )}
-                // ListEmptyComponent={() => (
-                //   <View style={{
-                //     justifyContent: 'center',
-                //     alignItems: 'center',
-                //   }}>
-                //     <Text>123</Text>
-                //   </View>)
-                // }
                 keyExtractor={i => i.city}
               />}
           </Modal>

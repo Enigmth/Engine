@@ -1,6 +1,11 @@
 import { useTheme } from '@react-navigation/native'
 import React from 'react'
-import { LayoutAnimation, TouchableOpacity, View } from 'react-native'
+import {
+  LayoutAnimation,
+  Modal as ReactModal,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import DimensionServiceImpl from '../services/DimensionServiceImpl'
 
 const height = DimensionServiceImpl.getHeight()
@@ -16,22 +21,20 @@ const Modal = props => {
   }
   const { colors } = useTheme()
 
-  return (
-    <View style={{
-      position: 'absolute',
-      backgroundColor: 'rgba(52, 52, 52, 0.5)',
-      // justifyContent: 'center',
-      alignItems: 'center',
-      height: height,
-      width: '100%',
-      bottom: 0,
-      zIndex: 10,
-      elevation: 10,
-    }}>
+  return (<View style={{
+    position: 'absolute',
+    backgroundColor: 'rgba(52, 52, 52, 0.5)', // justifyContent: 'center',
+    height: height,
+    width: width,
+    bottom: 0,
+    zIndex: 10,
+    elevation: 10,
+  }}>
+    <ReactModal
+      transparent={true}
+      animationType="slide">
       <TouchableOpacity style={{
-        flex: 1,
-        height: '100%',
-        width: '100%',
+        flex: 1, height: '100%', width: '100%',
       }}
                         onPress={() => close()}/>
       <View
@@ -40,25 +43,23 @@ const Modal = props => {
           // alignItems: 'center',
           backgroundColor: colors.card,
           padding: 20,
-          borderRadius: 8,
-          // height: height / 1.5,
+          borderRadius: 8, // height: height / 1.5,
           maxHeight: 350,
           flex: 1,
           marginTop: 15,
-          width: width - 40,
-          ...props.containerStyle,
+          justifyContent: 'center', ...props.containerStyle,
+          marginHorizontal: 20,
+          zIndex: 50,
+          elevation: 50,
         }}>
         {props.children}
       </View>
       <TouchableOpacity style={{
-        flex: 1,
-        height: '100%',
-        width: '100%',
+        flex: 1, height: '100%', width: '100%',
       }}
                         onPress={() => close()}/>
-
-    </View>
-  )
+    </ReactModal>
+  </View>)
 }
 
 export default Modal
