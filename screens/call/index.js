@@ -83,14 +83,14 @@ const Call = () => {
           adjustsFontSizeToFit={true}
           numberOfLines={2}
         >{item.city}</Text>
-        <Text style={{ fontSize: 12, color: colors, marginRight: 20 }}>
+        <Text style={{ fontSize: 12, color: colors.text, marginRight: 20 }}>
           {item.address}
         </Text>
       </View>
       <View>
         <MaterialIcons
           name={'keyboard-arrow-right'}
-          // color={'#6d2c96'}
+          color={colors.text}
           size={20}
         />
       </View>
