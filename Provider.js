@@ -2,7 +2,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as SplashScreen from 'expo-splash-screen'
 import i18n from 'i18n-js'
 import React, { useState } from 'react'
-import { FlatList, LayoutAnimation, TextInput, View } from 'react-native'
+import {
+  Appearance,
+  FlatList,
+  LayoutAnimation,
+  TextInput,
+  View,
+} from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import ButtonPicker from './components/ButtonPicker'
 import Modal from './components/Modal'
@@ -11,6 +17,7 @@ import { CityCountryInfo } from './constants/CityCountryInfo'
 import Citys from './constants/Citys'
 import { Countries } from './constants/Countries'
 import Languages from './constants/language/Languages'
+import ThemeTypes from './constants/ThemeTypes'
 import GlobalState from './GlobalState'
 import Router from './router/Router'
 import { multiGet, setAsyncStorage } from './services/AsyncStorageServiceImpl'
@@ -68,10 +75,14 @@ const Provider = () => {
         lang = Languages.en
       }
       let isDarkTheme = localData[1][1]
+      if (isDarkTheme === null) {
+        let colorScheme = Appearance.getColorScheme()
+        isDarkTheme = colorScheme === ThemeTypes.dark
+      }
       if (!isDarkTheme) {
         isDarkTheme = false
       }
-      triggerDarkTheme(isDarkTheme === 'true')
+      triggerDarkTheme(isDarkTheme === 'true' || isDarkTheme === true)
       onSetLanguage(lang)
       getCurrentLocation()
       try {
