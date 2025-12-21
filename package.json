@@ -7,7 +7,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "publish-dev": " expo publish --release-channel development"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",

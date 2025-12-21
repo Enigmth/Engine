@@ -1,30 +1,51 @@
 {
   "cli": {
-    "version": ">= 0.34.0"
+    "version": ">= 15.0.6",
+    "appVersionSource": "remote"
   },
   "build": {
     "development": {
       "developmentClient": false,
-      "releaseChannel": "dev",
+      "autoIncrement": true,
+      "android": {
+        "buildType": "apk"
+      },
+      "environment": "development",
+      "channel": "development"
+    },
+    "development-cli": {
+      "developmentClient": false,
       "android": {
         "buildType": "apk"
       }
     },
     "preview": {
-      "releaseChannel": "dev",
+      "developmentClient": true,
+      "distribution": "internal",
       "android": {
         "buildType": "apk"
       }
     },
     "production": {
-      "releaseChannel": "prod"
+      "developmentClient": false,
+      "autoIncrement": true,
+      "environment": "production"
     }
   },
   "submit": {
     "production": {
-      "android": {
-        "serviceAccountKeyPath": "./api-5340903335321893736-126657-a92ed3cbed44.json",
-        "track": "internal"
+      "ios": {
+        "appleId": "avixsolution@gmail.com",
+        `
+        "ascAppId": "1475473538",
+        "appleTeamId": "6NS64VSZUC"
+      }
+    },
+    "development": {
+      "ios": {
+        "appleId": "avixsolution@gmail.com",
+        "ascAppId": "1475473538",
+        "appleTeamId": "6NS64VSZUC"
       }
     }
   }
