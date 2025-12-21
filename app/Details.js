@@ -23,7 +23,6 @@ const Details = (props) => {
   const {
     name, latitude, longitude,
   } = useLocalSearchParams();
-  const {mechanic} = props;
   const {colors} = useTheme();
 
   const onCallPress = (app) => {

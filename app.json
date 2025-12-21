@@ -13,7 +13,8 @@
       "resizeMode": "cover"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/32718172-ff3b-4fe5-9201-17542e53dc0e"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -52,6 +53,9 @@
       "eas": {
         "projectId": "32718172-ff3b-4fe5-9201-17542e53dc0e"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }

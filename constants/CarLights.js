@@ -5,6 +5,7 @@ export const carLights = [
     'image_url': 'https://www.gofar.co/wp-content/uploads/2019/06/GOFAR_car-dashboard-symbols-engine-temperature-warning-light.jpg',
     'image_path': require(
       '../assets/car-light/Engine_Temperature_Warning_Light.jpg'),
+    solution: 'Stop safely and turn off the engine. Let it cool completely. Check coolant level only after cooling. Do not continue driving if the warning remains.',
   },
   {
     'name': 'Battery Charge Warning Light',
@@ -12,24 +13,32 @@ export const carLights = [
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-battery-charge.jpg',
     'image_path': require(
       '../assets/car-light/Battery_Charge_Warning_Light.jpg'),
+    solution: 'Turn off non-essential electronics. Drive to a service center if possible. Have the battery and alternator checked.',
+
   },
   {
     'name': 'Oil Pressure Warning Light',
     'description': 'Indicator light means loss of oil pressure, meaning lubrication is low or lost completelyImmediately check the oil level and pressure',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/283092_Car-Dashboard-Symbols_oil-pressure_090618.jpg',
     'image_path': require('../assets/car-light/Oil_Pressure_Warning_Light.jpg'),
+    solution: 'Stop immediately and switch off the engine. Check oil level. Do not drive if the warning stays on.',
+
   },
   {
     'name': 'Brake Warning Light',
     'description': 'Indicator light turns on when the handbrake is onIf it lit continuously, it means that hydraulic pressure has been lost in one side of the brake system or that the fluid level in the master cylinder is dangerously low (due to a leak somewhere in the brake system)',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-brake.jpg',
     'image_path': require('../assets/car-light/Brake_Warning_Light.jpg'),
+    solution: 'Release parking brake. Check brake fluid level. If the light stays on, stop driving and have brakes inspected.',
+
   },
   {
     'name': 'Transmission Temperature',
     'description': 'Indicator light means the engine temperature has exceeded normal limitsCheck coolant level, fan operation,radiator cap, coolant leaks',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-transmission-temp.jpg',
     'image_path': require('../assets/car-light/Transmission_Temperature.jpg'),
+    solution: 'Pull over and allow transmission to cool. Avoid heavy load or towing. Seek service if repeated.',
+
   },
   {
     'name': 'Tire Pressure Warning Light',
@@ -37,60 +46,80 @@ export const carLights = [
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-time-pressure.jpg',
     'image_path': require(
       '../assets/car-light/Tire_Pressure_Warning_Light.jpg'),
+    solution: 'Check all tires and inflate to recommended pressure. Inspect for punctures.',
+
   },
   {
     'name': 'Traction Control Off',
     'description': 'Indicator light means that the vehicles TCS (traction control system) has been deactivated.',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-traction-control-off.jpg',
     'image_path': require('../assets/car-light/Traction_Control_Off.jpg'),
+    solution: 'Re-enable traction control, especially on wet or slippery roads.',
+
   },
   {
     'name': 'Steering Wheel Lock',
     'description': 'Indicator light means your steering wheel is locked and can not be movedTo turn off the steering lock, insert the key into the ignition and turn it to at least the first position while turning the steering wheel in either direction',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-steering-wheel-lock.jpg',
     'image_path': require('../assets/car-light/Steering_Wheel_Lock.jpg'),
+    solution: 'Insert key or press start while gently turning the steering wheel left or right.',
+
   },
   {
     'name': 'Trailer Tow Hitch Warning',
     'description': 'Indicator lights mean that the tow hitch is unlocked or that there’s an issue with the lighting system.',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-trailer-tow-hitch-warning.jpg',
     'image_path': require('../assets/car-light/Trailer_Tow_Hitch_Warning.jpg'),
+    solution: 'Stop and check hitch lock and trailer electrical connections.',
+
   },
   {
     'name': 'Traction Control Light',
     'description': 'Indicator light turns on when the vehicle TCS (traction control system) is activated.',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-traction-control-light.jpg',
     'image_path': require('../assets/car-light/Traction_Control_Light.jpg'),
+    solution: 'Normal operation on slippery surfaces. Drive smoothly.',
+
   },
   {
     'name': 'Service Vehicle Soon',
     'description': 'Indicator light turns on when there is a fault condition in an area of the vehicle chassis systems such as—the anti-lock (ABS) brake system, the traction control (TCS) system, the electronic suspension system, or the brake hydraulic system',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-sevice-vehicle-soon.jpg',
     'image_path': require('../assets/car-light/Service_Vehicle_Soon.jpg'),
+    solution: 'Vehicle can usually be driven carefully. Schedule diagnostic service soon.',
+
   },
   {
     'name': 'Security Alert',
     'description': 'Indicator light will turn on momentarily if the ignition switch is locked and will need the proper',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-security-alert.jpg',
     'image_path': require('../assets/car-light/Security_Alert.jpg'),
+    solution: 'Use the correct key or key fob. Restart the vehicle. If persistent, have system checked.',
+
   },
   {
     'name': 'Side Airbag',
     'description': 'Indicator light means a fault with the side airbag',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-side-airbag.jpg',
     'image_path': require('../assets/car-light/Side_Airbag.jpg'),
+    solution: 'Airbag protection may be reduced. Have the airbag system inspected immediately.',
+
   },
   {
     'name': 'Reduced Power Warning',
     'description': 'Indicator light means that the Engine Computer has limited engine power output.',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-reduced-power-warning.jpg',
     'image_path': require('../assets/car-light/Reduced_Power_Warning.jpg'),
+    solution: 'Drive gently and avoid hard acceleration. Seek professional diagnosis.',
+
   },
   {
     'name': 'Seat Belt Indicator',
     'description': 'Indicator light means that a seat belt has not been secured for a passenger in the vehicle.',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-seat-belt.jpg',
     'image_path': require('../assets/car-light/Seat_Belt_Indicator.jpg'),
+    solution: 'Fasten all seat belts before driving.',
+
   },
   {
     'name': 'Press Clutch Pedal',
@@ -342,7 +371,7 @@ export const carLights = [
   },
   {
     'name': 'Windshield Defrost',
-    'description': '        Indicator light means that the window defrost is in operation.',
+    'description': 'Indicator light means that the window defrost is in operation.',
     'image_url': 'https://www.gofar.co/wp-content/uploads/2018/10/car-dashboard-symbols-windshield-defrost.jpg',
     'image_path': require('../assets/car-light/Windshield_Defrost.jpg'),
   },
@@ -576,5 +605,7 @@ export const carLights = [
     'name': 'Low engine oil warning',
     'description': 'Indicates that the engine oil level has decreased below the lower acceptable limit. When you start you engine, the low oil level warning light should illuminate briefly and then turn off. If it doesn’t turn off, the oil level is either too low or there is a problem with the oil level sensor system',
     'image_path': require('../assets/car-light/ENGINE_LOW_OIL.jpeg'),
+    solution: 'Stop engine and check oil level. Add oil if needed. Do not drive if warning remains.',
+
   },
 ]

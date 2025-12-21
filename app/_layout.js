@@ -1,14 +1,13 @@
 import {Stack} from 'expo-router';
 import React from 'react';
+import Provider from '../Provider';
 
 export default function _layout() {
-  console.log('Layout');
   return (
       <Stack>
         <Stack.Screen name="(tabs)" options={{
           headerShown: false,
         }}/>
-
         <Stack.Screen name="Details"
                       options={{
                         headerShown: false,
@@ -21,6 +20,7 @@ export default function _layout() {
                         sheetAllowedDetents: [0.6, .8],
                       }}/>
       </Stack>
+
   );
 };
 

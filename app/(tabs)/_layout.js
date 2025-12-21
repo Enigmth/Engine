@@ -28,14 +28,14 @@ export default function _layout() {
                            color,
                          }) => {
               let iconName;
+              console.log(route);
               if (route.name === 'Home') {
                 iconName = <MaterialCommunityIcons name={`car-info`} size={20}
                                                    color={color}/>;
-              }
-                  // else if (route.name === 'Settings') {
-                  //   iconName = <Ionicons name={`settings`} size={20} color={color}/>;
-              // }
-              else if (route.name === 'index') {
+              } else if (route.name === 'Settings') {
+                iconName =
+                    <Ionicons name={`settings`} size={20} color={color}/>;
+              } else if (route.name === 'index') {
                 iconName = <Ionicons name={`home`} size={20}
                                      color={color}/>;
               } else if (route.name === 'Profile') {
@@ -66,7 +66,7 @@ export default function _layout() {
             navigationOptions={{
               headerShown: false,
             }}/>
-        {/*<Tabs.Screen name="Profile"/>*/}
+        {/*<Tabs.Screen name="Settings"/>*/}
         <Tabs.Screen name="Home"/>
 
       </Tabs>

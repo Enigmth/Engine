@@ -120,7 +120,7 @@ const Call = () => {
                 paddingVertical: 10,
               }}>
             <View style={{
-              backgroundColor: colors.background, height: 40,
+              backgroundColor: colors.background,
               paddingBottom: 5,
               paddingHorizontal: 10,
               flexDirection: 'row',
@@ -149,8 +149,6 @@ const Call = () => {
                   backgroundColor: colors.background,
                   paddingBottom: 60,
                 }}
-                // stickyHeaderIndices={[0]}
-                // ListHeaderComponent={}
                 keyExtractor={i => i.name + i.address}
                 renderItem={({item}) => <Item item={item}/>}
                 ListEmptyComponent={() => (

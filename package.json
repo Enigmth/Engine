@@ -8,8 +8,10 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "publish-dev": " expo publish --release-channel development",
-    "build:ios": "expo build:ios --release-channel prod"
+    "publish-dev": " eas update --branch development -m test",
+    "publish-prod": " eas update --branch production -m test",
+    "build:ios": "expo build:ios --release-channel prod",
+    "skip_fingerprint": "EAS_SKIP_AUTO_FINGERPRINT=1 eas build -e production --auto-submit"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",

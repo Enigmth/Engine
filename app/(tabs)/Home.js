@@ -4,6 +4,7 @@ import React, {useState} from 'react';
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import CarLight from '../../components/CarLight';
 import EngineSafeAreaView from '../../components/EngineSafeAreaView';
+import FlipCard from '../../components/FlipCard';
 import Search from '../../components/Search';
 import {carLights} from '../../constants/CarLights';
 import {CarLightsAl} from '../../constants/CarLightsAl';
@@ -58,9 +59,6 @@ export default function Home () {
             context.language === 'mk' && cl.name.toUpperCase().
               includes(
                 MacedonianLanguageServiceImpl.convert(search.toUpperCase())))}
-        // stickyHeaderIndices={[0]}
-        // ListHeaderComponent={
-        //   }
         ListEmptyComponent={<View
           style={{
             flex: 1,
@@ -71,7 +69,6 @@ export default function Home () {
           <Text style={{ color: colors.text }}>{Translate.t(
             'NoDataFound')}</Text>
         </View>}
-        // contentContainerStyle={{ paddingBottom: tabBarHeight() }}
         initialNumToRender={16}
         renderItem={({ item }) => <CarLight carLight={item}/>}
         keyExtractor={i => i.image_url}/>

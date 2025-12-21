@@ -20,7 +20,8 @@ export function NoTaxiTabBar({
                                                color={color}/>,
     index: ({color}) => <Ionicons name={`home`} size={20}
                                   color={color}/>,
-    // Profile: ({ color }) => <Ionicons name={`settings`} size={20} color={color}/>,
+    Settings: ({color}) => <Ionicons name={`settings`} size={20}
+                                     color={color}/>,
   };
   return (
       <TabBar context={context}>
