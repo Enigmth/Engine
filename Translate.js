@@ -1,6 +1,5 @@
-import * as Localization from 'expo-localization'
-import i18n from 'i18n-js'
-import * as React from 'react'
+import * as Localization from 'expo-localization';
+import i18n from 'i18n-js';
 
 // Set the key-value pairs for the different languages you want to support.
 i18n.translations = {
@@ -9,9 +8,9 @@ i18n.translations = {
   mk: require('./language/mk.json'),
 }
 
-if (Localization.locale.includes('al')) {
+if (Localization?.locale?.includes('al')) {
   i18n.locale = 'al'
-} else if (Localization.locale.includes('mk')) {
+} else if (Localization?.locale?.includes('mk')) {
   i18n.locale = 'mk'
 } else {
   i18n.locale = 'en'

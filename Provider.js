@@ -1,145 +1,142 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { FlashList } from '@shopify/flash-list'
-import * as SplashScreen from 'expo-splash-screen'
-import i18n from 'i18n-js'
-import React, { useState } from 'react'
-import { Appearance, LayoutAnimation, TextInput, View } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import ButtonPicker from './components/ButtonPicker'
-import Modal from './components/Modal'
-import AsyncStorageItems from './constants/async-storage/AsyncStorageItems'
-import { CityCountryInfo } from './constants/CityCountryInfo'
-import Citys from './constants/Citys'
-import { Countries } from './constants/Countries'
-import Languages from './constants/language/Languages'
-import { DarkTheme, MyTheme } from './constants/Theme'
-import ThemeTypes from './constants/ThemeTypes'
-import GlobalState from './GlobalState'
-import Router from './router/Router'
-import { multiGet, setAsyncStorage } from './services/AsyncStorageServiceImpl'
-import GeolibServiceImpl from './services/GeolibServiceImpl'
-import LocationServiceImpl from './services/LocationServiceImpl'
-import Translate from './Translate'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {FlashList} from '@shopify/flash-list';
+import i18n from 'i18n-js';
+import React, {useState} from 'react';
+import {LayoutAnimation, TextInput, View} from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import ButtonPicker from './components/ButtonPicker';
+import Modal from './components/Modal';
+import AsyncStorageItems from './constants/async-storage/AsyncStorageItems';
+import {CityCountryInfo} from './constants/CityCountryInfo';
+import Citys from './constants/Citys';
+import {Countries} from './constants/Countries';
+import Languages from './constants/language/Languages';
+import {DarkTheme, MyTheme} from './constants/Theme';
+import GlobalState from './GlobalState';
+import {setAsyncStorage} from './services/AsyncStorageServiceImpl';
+import GeolibServiceImpl from './services/GeolibServiceImpl';
+import LocationServiceImpl from './services/LocationServiceImpl';
+import Translate from './Translate';
 
 const Provider = () => {
-  const [language, setLanguage] = useState(Languages.en)
-  const [location, setLocation] = useState(null)
-  const [city, setCity] = useState(Citys.TETOVO)
-  const [country, setCountry] = useState(Countries[0])
-  const [placePopup, setPlacePopup] = useState(null)
-  const [search, setSearch] = useState('')
-  const [isDarkMode, setIsDarkMode] = useState(false)
+  const [language, setLanguage] = useState(Languages.en);
+  const [location, setLocation] = useState(null);
+  const [city, setCity] = useState(Citys.TETOVO);
+  const [country, setCountry] = useState(Countries[0]);
+  const [placePopup, setPlacePopup] = useState(null);
+  const [search, setSearch] = useState('');
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const [themeColors, setThemeColors] = useState(
-    isDarkMode ? DarkTheme.colors : MyTheme.colors)
+      isDarkMode ? DarkTheme.colors : MyTheme.colors);
+  console.log('provier');
   const onSetLanguage = lang => {
-    i18n.locale = lang
-    setLanguage(lang)
-    setAsyncStorage(AsyncStorageItems.Language, lang)
-  }
+    i18n.locale = lang;
+    setLanguage(lang);
+    setAsyncStorage(AsyncStorageItems.Language, lang);
+  };
 
   const getCurrentLocation = () => {
     LocationServiceImpl.requestForegroundPermissions().then(res => {
       if (res.granted) {
         LocationServiceImpl.getCurrentPosition().then(position => {
-            let myLocation = {
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
-            }
-            setLocation(myLocation)
-            let nearbyCity = GeolibServiceImpl.getNearPlace(myLocation,
-              CityCountryInfo)
-            setCity(nearbyCity.city)
-            setCountry(nearbyCity.country)
+              let myLocation = {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+              };
+              setLocation(myLocation);
+              let nearbyCity = GeolibServiceImpl.getNearPlace(myLocation,
+                  CityCountryInfo);
+              setCity(nearbyCity.city);
+              setCountry(nearbyCity.country);
 
-          },
+            },
         ).catch(er => {
-          console.error(er)
-        })
+          console.error(er);
+        });
       } else {
       }
     }).catch(() => {
-    })
-  }
+    });
+  };
 
-  React.useEffect(() => {
-    (async function () {
-      let localData = await multiGet(
-        [AsyncStorageItems.Language, AsyncStorageItems.IsDarkTheme])
-      let lang = localData[0][1]
-      if (!lang) {
-        lang = Languages.en
-      }
-      let isDarkTheme = localData[1][1]
-      if (isDarkTheme === null) {
-        let colorScheme = Appearance.getColorScheme()
-        isDarkTheme = colorScheme === ThemeTypes.dark
-      }
-      if (!isDarkTheme) {
-        isDarkTheme = false
-      }
-      triggerDarkTheme(isDarkTheme === 'true' || isDarkTheme === true)
-      onSetLanguage(lang)
-      getCurrentLocation()
-      try {
-        await SplashScreen.hideAsync()
-      } catch (e) {
-      }
-    })()
-    return () => {
-      try {
-        // Appearance.remove()
-      } catch (e) {
-      }
-    }
-  }, [])
-  let flatListRef = React.useRef(null)
-
+  // React.useEffect(() => {
+  //   (async function () {
+  //     let localData = await multiGet(
+  //       [AsyncStorageItems.Language, AsyncStorageItems.IsDarkTheme])
+  //     let lang = localData[0][1]
+  //     if (!lang) {
+  //       lang = Languages.en
+  //     }
+  //     let isDarkTheme = localData[1][1]
+  //     if (isDarkTheme === null) {
+  //       let colorScheme = Appearance.getColorScheme()
+  //       isDarkTheme = colorScheme === ThemeTypes.dark
+  //     }
+  //     if (!isDarkTheme) {
+  //       isDarkTheme = false
+  //     }
+  //     triggerDarkTheme(isDarkTheme === 'true' || isDarkTheme === true)
+  //     onSetLanguage(lang)
+  //     getCurrentLocation()
+  //     try {
+  //       await SplashScreen.hideAsync()
+  //     } catch (e) {
+  //     }
+  //   })()
+  //   return () => {
+  //     try {
+  //       // Appearance.remove()
+  //     } catch (e) {
+  //       console.log(e)
+  //     }
+  //   }
+  // }, [])
+  let flatListRef = React.useRef(null);
   const filterCity = () => CityCountryInfo.filter(c => c.country === country &&
-    c.city.toUpperCase().includes(search.toUpperCase()))
+      c.city.toUpperCase().includes(search.toUpperCase()));
   React.useEffect(() => {
     if (placePopup === 'city') {
       const index = filterCity().findIndex(
-        c => c.city.toUpperCase() === city.toUpperCase())
+          c => c.city.toUpperCase() === city.toUpperCase());
       try {
         if (flatListRef && flatListRef.current !== null && index &&
-          index > 0) {
+            index > 0) {
           flatListRef.scrollToIndex({
             animated: true,
             index: index,
-          })
+          });
         }
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
     }
-  }, [placePopup])
+  }, [placePopup]);
 
   const getItemLayout = (data, index) => {
     return (
-      {
-        length: 57,
-        offset: 57 * index,
-        index,
-      }
-    )
-  }
+        {
+          length: 57,
+          offset: 57 * index,
+          index,
+        }
+    );
+  };
 
   const setPlaceModal = place => {
-    LayoutAnimation.easeInEaseOut()
-    setPlacePopup(place)
-  }
+    LayoutAnimation.easeInEaseOut();
+    setPlacePopup(place);
+  };
 
   const triggerDarkTheme = (isDark) => {
-    setIsDarkMode(isDark)
-    setThemeColors(isDark ? DarkTheme.colors : MyTheme.colors)
+    setIsDarkMode(isDark);
+    setThemeColors(isDark ? DarkTheme.colors : MyTheme.colors);
     AsyncStorage.setItem(AsyncStorageItems.IsDarkTheme, String(isDark)).
-      then().
-      catch()
-  }
-
+        then().
+        catch();
+  };
+  console.log('tes');
   return (
-    <>
-      <GlobalState.Provider value={{
+      <GlobalState value={{
         language,
         setLanguage: lang => onSetLanguage(lang),
         location,
@@ -153,7 +150,6 @@ const Provider = () => {
         setDarkMode: (val) => triggerDarkTheme(val),
       }}>
 
-        <Router isDarkMode={isDarkMode}/>
         {placePopup != null &&
           <Modal close={() => {
             setPlacePopup(null)
@@ -163,24 +159,27 @@ const Provider = () => {
                  containerStyle={{
                    flex: 0,
                    minHeight: 270,
-                   backgroundColor: themeColors.background,
+                   backgroundColor: MyTheme.colors.background,
                  }}>
             {placePopup === 'city' &&
               <View style={{
                 marginBottom: 5,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                backgroundColor: themeColors.background,
+                backgroundColor: MyTheme.colors.background,
               }}>
                 <Ionicons name={'chevron-back-outline'} size={18}
-                          color={themeColors.text}
+                          color={MyTheme.colors.text}
                           onPress={() => {
                             setPlaceModal('country')
                           }
                           }/>
                 <TextInput placeholder={Translate.t('Search')}
-                           placeholderTextColor={themeColors.text}
-                           style={{ paddingRight: 10, color: themeColors.text }}
+                           placeholderTextColor={MyTheme.colors.text}
+                           style={{
+                             paddingRight: 10,
+                             color: MyTheme.colors.text,
+                           }}
                            onChangeText={t => setSearch(t)}/>
                 <View/>
               </View>}
@@ -242,9 +241,8 @@ const Provider = () => {
               />}
           </Modal>
         }
-      </GlobalState.Provider>
-    </>
-  )
-}
+      </GlobalState>
+  );
+};
 
-export default Provider
+export default Provider;

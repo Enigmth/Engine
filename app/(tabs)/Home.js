@@ -1,17 +1,17 @@
-import { useTheme } from '@react-navigation/native'
-import { FlashList } from '@shopify/flash-list'
-import React, { useState } from 'react'
-import { Dimensions, StyleSheet, Text, View } from 'react-native'
-import CarLight from '../components/CarLight'
-import EngineSafeAreaView from '../components/EngineSafeAreaView'
-import Search from '../components/Search'
-import { carLights } from '../constants/CarLights'
-import { CarLightsAl } from '../constants/CarLightsAl'
-import { CarLightsMk } from '../constants/CarLightsMk'
-import GlobalState from '../GlobalState'
+import {useTheme} from '@react-navigation/native';
+import {FlashList} from '@shopify/flash-list';
+import React, {useState} from 'react';
+import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import CarLight from '../../components/CarLight';
+import EngineSafeAreaView from '../../components/EngineSafeAreaView';
+import Search from '../../components/Search';
+import {carLights} from '../../constants/CarLights';
+import {CarLightsAl} from '../../constants/CarLightsAl';
+import {CarLightsMk} from '../../constants/CarLightsMk';
+import GlobalState from '../../GlobalState';
 import MacedonianLanguageServiceImpl
-  from '../services/MacedonianLanguageServiceImpl'
-import Translate from '../Translate'
+  from '../../services/MacedonianLanguageServiceImpl';
+import Translate from '../../Translate';
 
 const { height } = Dimensions.get('window')
 export default function Home () {
@@ -33,8 +33,6 @@ export default function Home () {
         return carLights
     }
   }
-
-  console.log(colors)
   return (
     <EngineSafeAreaView
       style={[styles.container, { backgroundColor: colors.background }]}>
@@ -51,6 +49,10 @@ export default function Home () {
       </View>
       <FlashList
         estimatedItemSize={50}
+        contentContainerStyle={{
+          backgroundColor: colors.background,
+          paddingBottom: 60,
+        }}
         data={getCarLights().filter(
           cl => cl.name.toUpperCase().includes(search.toUpperCase()) ||
             context.language === 'mk' && cl.name.toUpperCase().

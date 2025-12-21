@@ -573,7 +573,7 @@ export const carLights = [
     'image_path': require('../assets/car-light/Water_Fluid_Filter_Warning.jpg'),
   },
   {
-    'name': 'Предупредување за ниско ниво на масло во моторот',
+    'name': 'Low engine oil warning',
     'description': 'Indicates that the engine oil level has decreased below the lower acceptable limit. When you start you engine, the low oil level warning light should illuminate briefly and then turn off. If it doesn’t turn off, the oil level is either too low or there is a problem with the oil level sensor system',
     'image_path': require('../assets/car-light/ENGINE_LOW_OIL.jpeg'),
   },
