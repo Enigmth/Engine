@@ -28,7 +28,6 @@ export default function _layout() {
                            color,
                          }) => {
               let iconName;
-              console.log(route.name);
               if (route.name === 'Home') {
                 iconName = <MaterialCommunityIcons name={`car-info`} size={20}
                                                    color={color}/>;
@@ -57,7 +56,6 @@ export default function _layout() {
         {/*             navigationOptions={{*/}
         {/*               headerShown: false,*/}
         {/*             }}/>*/}
-        <Tabs.Screen name="Call"/>
 
         <Tabs.Screen
             name="index"
@@ -69,6 +67,8 @@ export default function _layout() {
               headerShown: false,
             }}/>
         {/*<Tabs.Screen name="Profile"/>*/}
+        <Tabs.Screen name="Home"/>
+
       </Tabs>
   );
 }

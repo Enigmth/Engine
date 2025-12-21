@@ -21,7 +21,10 @@
     "ios": {
       "buildNumber": "1.0.1",
       "bundleIdentifier": "com.avix.engine",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "com.avix.engine",

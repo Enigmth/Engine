@@ -8,7 +8,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "publish-dev": " expo publish --release-channel development"
+    "publish-dev": " expo publish --release-channel development",
+    "build:ios": "expo build:ios --release-channel prod"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",

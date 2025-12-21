@@ -27,12 +27,12 @@ const Call = () => {
   let context = React.useContext(GlobalState);
   const [search, setSearch] = useState('');
   const [selectedInfo, setSelectedInfo] = useState(null);
-  const [mechanics, setMechanics] = useState([]);
+  const [mechanics, setMechanics] = useState(getMechanics());
   const [loading, setLoading] = useState(false);
   const {colors} = useTheme();
-  React.useEffect(() => {
-    getByCity(context.city);
-  }, [context.city]);
+  // React.useEffect(() => {
+  //   getByCity(context.city);
+  // }, [context.city]);
 
   const getByCity = city => {
     setLoading(true);

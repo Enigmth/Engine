@@ -73,6 +73,7 @@ const Details = (props) => {
           marginTop: 20,
         }}>
           <MapView
+
               style={parkingMapStyle.map}
               onRegionChange={props.onRegionChange}
               initialRegion={{

@@ -94,7 +94,7 @@ const TabBar = (props) => {
             alignItems: 'center',
             justifyContent: 'space-between',
             paddingHorizontal: 15,
-            width: 250,
+            width: 200,
             alignSelf: 'center',
             padding: 15,
             borderRadius: 18,
