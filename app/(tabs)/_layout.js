@@ -75,6 +75,24 @@ export default function Layout() {
           <Label>Lights</Label>
         </NativeTabs.Trigger>
 
+        <NativeTabs.Trigger name="Scan">
+          <Icon
+              sf={{
+                default: 'camera.viewfinder',
+                selected: 'camera.viewfinder',
+              }}
+              androidSrc={{
+                default: (
+                    <VectorIcon family={Ionicons} name="scan-outline"/>
+                ),
+                selected: (
+                    <VectorIcon family={Ionicons} name="scan"/>
+                ),
+              }}
+          />
+          <Label>Scan</Label>
+        </NativeTabs.Trigger>
+
         {/*<NativeTabs.Trigger name="Search" role="search"*/}
         {/*                    options={{*/}
         {/*                      title: 'Search',*/}

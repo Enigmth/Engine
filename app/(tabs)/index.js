@@ -73,7 +73,7 @@ const Call = () => {
           style={[
             styles.card,
             {
-              backgroundColor: colors.card,
+              backgroundColor: colors.background,
               borderColor: isLight ? '#E8EDF8' : 'transparent',
               borderWidth: isLight ? 1 : 0,
               shadowOpacity: isLight ? 0.14 : 0.08,
