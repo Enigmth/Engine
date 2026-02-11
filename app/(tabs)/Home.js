@@ -190,6 +190,7 @@ export default function Home() {
   const {colors} = useTheme();
   const context = React.useContext(GlobalState);
   const surfaceColor = context.isDarkMode ? '#1D222D' : '#FFFFFF';
+  const [selectedWarningType, setSelectedWarningType] = useState('all');
 
   useFocusEffect(
       React.useCallback(() => {
@@ -210,7 +211,15 @@ export default function Home() {
     }
   };
 
-  const filteredLights = getCarLights();
+  const allLights = getCarLights();
+  const filteredLights = selectedWarningType === 'all' ? allLights : allLights.
+      filter(light => (light.warningType || 'info') === selectedWarningType);
+  const warningFilters = [
+    {key: 'all', label: 'All'},
+    {key: 'danger', label: 'Danger'},
+    {key: 'warning', label: 'Warning'},
+    {key: 'info', label: 'Info'},
+  ];
 
   return (
       <EngineSafeAreaView
@@ -218,6 +227,38 @@ export default function Home() {
         <ScreenHeader
             title="Engine Lights"
         />
+
+        <View style={styles.filterRow}>
+          {warningFilters.map(filter => {
+            const isActive = selectedWarningType === filter.key;
+            const filterMeta = getWarningMeta(
+                filter.key === 'all' ? 'info' : filter.key,
+                context.isDarkMode);
+            return (
+                <TouchableOpacity
+                    key={filter.key}
+                    onPress={() => setSelectedWarningType(filter.key)}
+                    activeOpacity={0.9}
+                    style={[
+                      styles.filterChip,
+                      {
+                        borderColor: filterMeta.textColor,
+                        backgroundColor: isActive
+                            ? filterMeta.backgroundColor
+                            : 'transparent',
+                      },
+                    ]}>
+                  <Text
+                      style={[
+                        styles.filterChipText,
+                        {color: filterMeta.textColor},
+                      ]}>
+                    {filter.label}
+                  </Text>
+                </TouchableOpacity>
+            );
+          })}
+        </View>
 
         <FlashList
             estimatedItemSize={170}
@@ -255,6 +296,23 @@ const styles = StyleSheet.create({
   listContent: {
     paddingHorizontal: 12,
     paddingBottom: 80,
+  },
+  filterRow: {
+    flexDirection: 'row',
+    paddingHorizontal: 12,
+    marginTop: 2,
+    marginBottom: 10,
+    gap: 8,
+  },
+  filterChip: {
+    borderRadius: 999,
+    borderWidth: 1,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+  },
+  filterChipText: {
+    fontSize: 12,
+    fontWeight: '700',
   },
   flipContainer: {
     height: 170,
