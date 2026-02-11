@@ -1,3 +1,66 @@
+const normalizeDescription = description =>
+    (description || '').replace(/\s+/g, ' ').trim();
+
+const buildSolutionFromDescription = description => {
+  const summary = normalizeDescription(description);
+  if (!summary) {
+    return 'Check the related system and visit a service center if the warning remains.';
+  }
+  const text = summary.toLowerCase();
+
+  if (/temperature|coolant|overheat|radiator|fan/.test(text)) {
+    return 'Stop safely and let the engine cool. Check coolant level and look for leaks. Do not continue driving if the warning remains.';
+  }
+  if (/battery|alternator|charging|charge/.test(text)) {
+    return 'Turn off non-essential electronics. Check battery terminals and charging system. Visit service soon to test battery/alternator.';
+  }
+  if (/oil|lubrication/.test(text)) {
+    return 'Stop the engine and check oil level immediately. Top up oil if needed. Do not drive if the warning stays on.';
+  }
+  if (/brake|abs|hydraulic|pad/.test(text)) {
+    return 'Check parking brake and brake fluid first. Drive only if braking feels normal, then inspect brakes as soon as possible.';
+  }
+  if (/tire|pressure/.test(text)) {
+    return 'Check all tire pressures and inflate to factory specification. Inspect for punctures or leaks.';
+  }
+  if (/steering/.test(text)) {
+    return 'Reduce speed and avoid sudden steering input. Check power steering fluid/system and service promptly.';
+  }
+  if (/airbag|seat belt|seatbelt/.test(text)) {
+    return 'Safety system may be limited. Ensure seat belts are fastened and get the restraint system diagnosed immediately.';
+  }
+  if (/traction|tcs|esp|stability|awd|4wd/.test(text)) {
+    return 'Drive carefully on low-grip roads and avoid aggressive acceleration. Diagnose the traction/drivetrain system soon.';
+  }
+  if (/transmission|gearbox|powertrain/.test(text)) {
+    return 'Avoid heavy acceleration and towing. Check transmission/powertrain soon to prevent further damage.';
+  }
+  if (/fuel|filter|adblue|exhaust fluid|diesel/.test(text)) {
+    return 'Refill required fluids and inspect fuel/filter components. Service the system if the light does not clear.';
+  }
+
+  return `Issue detected: ${summary}. Reduce load, monitor vehicle behavior, and schedule service if the warning remains active.`;
+};
+
+const buildWarningTypeFromDescription = description => {
+  const text = normalizeDescription(description).toLowerCase();
+  if (!text) {
+    return 'info';
+  }
+
+  if (/overheat|temperature has exceeded|coolant leak|loss of oil pressure|oil pressure|brake fluid level is low|hydraulic pressure has been lost/.test(
+      text)) {
+    return 'danger';
+  }
+
+  if (/battery|alternator|charging|brake|abs|tire pressure|steering|airbag|traction|tcs|esp|transmission|gearbox|powertrain|fuel filter|adblue|catalytic|service/.test(
+      text)) {
+    return 'warning';
+  }
+
+  return 'info';
+};
+
 export const carLights = [
   {
     'name': 'Engine Temperature Warning Light',
@@ -608,4 +671,9 @@ export const carLights = [
     solution: 'Stop engine and check oil level. Add oil if needed. Do not drive if warning remains.',
 
   },
-]
+].map(item => ({
+  ...item,
+  solution: item.solution ?? buildSolutionFromDescription(item.description),
+  warningType: item.warningType ?? buildWarningTypeFromDescription(
+      item.description),
+}));

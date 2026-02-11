@@ -1,3 +1,66 @@
+const normalizeDescription = description =>
+    (description || '').replace(/\s+/g, ' ').trim();
+
+const buildSolutionFromDescription = description => {
+  const summary = normalizeDescription(description);
+  if (!summary) {
+    return 'Kontrollo sistemin përkatës dhe drejtohu në servis nëse paralajmërimi vazhdon.';
+  }
+  const text = summary.toLowerCase();
+
+  if (/temperatur|ftoh|radiator|ventilator|mbinxeh/.test(text)) {
+    return 'Ndal automjetin në mënyrë të sigurt dhe lëre motorin të ftohet. Kontrollo ftohësin dhe rrjedhjet. Mos vazhdo vozitjen nëse drita mbetet ndezur.';
+  }
+  if (/bateri|alternator|karik|charging|charge/.test(text)) {
+    return 'Fik pajisjet jo thelbësore elektrike. Kontrollo terminalet e baterisë dhe sistemin e karikimit. Bëj kontroll në servis sa më shpejt.';
+  }
+  if (/vaj|lubrifik/.test(text)) {
+    return 'Fike motorin menjëherë dhe kontrollo nivelin e vajit. Shto vaj nëse duhet. Mos e ngas makinën nëse drita vazhdon.';
+  }
+  if (/fren|abs|hidraulik|jastëk/.test(text)) {
+    return 'Kontrollo fillimisht frenën e dorës dhe nivelin e lëngut të frenave. Nëse problemi vazhdon, bëj kontroll të sistemit të frenimit.';
+  }
+  if (/gom|presion/.test(text)) {
+    return 'Kontrollo presionin e të gjitha gomave dhe fryji sipas specifikimeve. Verifiko nëse ka shpim ose rrjedhje.';
+  }
+  if (/timon|drejtim/.test(text)) {
+    return 'Ule shpejtësinë dhe shmang kthesat e forta. Kontrollo sistemin e drejtimit dhe shko në servis.';
+  }
+  if (/airbag|rrip/.test(text)) {
+    return 'Sistemet e sigurisë mund të jenë të kufizuara. Sigurohu që rripat janë vendosur dhe diagnostiko sistemin e airbag-ut menjëherë.';
+  }
+  if (/tërheq|tcs|esp|stability|awd|4wd/.test(text)) {
+    return 'Ngas me kujdes në rrugë me kapje të ulët dhe shmang përshpejtimin e fortë. Kontrollo sistemin e tërheqjes/transmisionit.';
+  }
+  if (/transmision|gearbox|powertrain|fuqi/.test(text)) {
+    return 'Shmang ngarkesën e rëndë dhe përshpejtimin agresiv. Kryej diagnostikim të transmisionit/sistemit të fuqisë sa më shpejt.';
+  }
+  if (/karburant|filter|filtr|adblue|shkarkim|diesel/.test(text)) {
+    return 'Mbush lëngjet e nevojshme dhe kontrollo filtrat/sistemin e karburantit. Nëse drita nuk fiket, shko në servis.';
+  }
+
+  return `Problemi i mundshëm: ${summary}. Ule ngarkesën e makinës dhe bëj kontroll teknik nëse paralajmërimi vazhdon.`;
+};
+
+const buildWarningTypeFromDescription = description => {
+  const text = normalizeDescription(description).toLowerCase();
+  if (!text) {
+    return 'info';
+  }
+
+  if (/temperatur|mbinxeh|presionin e vajit|humbjen e presionit|frenave|hidraulik/.test(
+      text)) {
+    return 'danger';
+  }
+
+  if (/bateri|alternator|karik|presionit të gomave|drejtim|airbag|rrip|tërheq|tcs|esp|transmision|fuqi|karburant|filtr|adblue|service|servis/.test(
+      text)) {
+    return 'warning';
+  }
+
+  return 'info';
+};
+
 export const CarLightsAl = [
   {
     'name': 'Drita paralajmëruese e temperaturës së motorit',
@@ -577,4 +640,9 @@ export const CarLightsAl = [
     'description': 'Tregon që niveli i vajit të motorit është ulur nën kufirin e poshtëm të pranueshëm. Kur ndizni motorin, drita paralajmëruese e nivelit të ulët të vajit duhet të ndizet për një kohë të shkurtër dhe më pas të fiket. Nëse nuk fiket, niveli i vajit është ose shumë i ulët ose ka një problem me sistemin e sensorit të nivelit të vajit',
     'image_path': require('../assets/car-light/ENGINE_LOW_OIL.jpeg'),
   },
-]
+].map(item => ({
+  ...item,
+  solution: item.solution ?? buildSolutionFromDescription(item.description),
+  warningType: item.warningType ?? buildWarningTypeFromDescription(
+      item.description),
+}));

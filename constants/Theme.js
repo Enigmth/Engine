@@ -1,8 +1,15 @@
+import {
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
+} from '@react-navigation/native';
 import Colors from '../constants/Colors'
 
 export const MyTheme = {
-  dark: false,
+  ...NavigationDefaultTheme,
+  dark: NavigationDefaultTheme.dark,
+  fonts: NavigationDefaultTheme.fonts,
   colors: {
+    ...NavigationDefaultTheme.colors,
     textColor: '#000',
     backgroundColor: '#fff',
     card: Colors.lightGrey,
@@ -15,8 +22,11 @@ export const MyTheme = {
 }
 
 export const DarkTheme = {
-  dark: true,
+  ...NavigationDarkTheme,
+  dark: NavigationDarkTheme.dark,
+  fonts: NavigationDarkTheme.fonts,
   colors: {
+    ...NavigationDarkTheme.colors,
     textColor: '#fff',
     backgroundColor: '#000',
     card: Colors.lightDarkTransparent,
@@ -27,4 +37,3 @@ export const DarkTheme = {
     background: '#000',
   },
 }
-

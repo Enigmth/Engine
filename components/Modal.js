@@ -3,7 +3,9 @@ import React from 'react'
 import {
   LayoutAnimation,
   Modal as ReactModal,
+  Platform,
   TouchableOpacity,
+  UIManager,
   View,
 } from 'react-native'
 import DimensionServiceImpl from '../services/DimensionServiceImpl'
@@ -11,12 +13,29 @@ import DimensionServiceImpl from '../services/DimensionServiceImpl'
 const height = DimensionServiceImpl.getHeight()
 const width = DimensionServiceImpl.getWidth()
 const Modal = props => {
+  const isClosingRef = React.useRef(false);
 
   React.useEffect(() => {
-    LayoutAnimation.easeInEaseOut()
+    if (Platform.OS === 'android' &&
+        UIManager.setLayoutAnimationEnabledExperimental) {
+      UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
+    try {
+      LayoutAnimation.easeInEaseOut();
+    } catch (e) {
+      console.log('Modal animation error', e);
+    }
   }, [])
   const close = () => {
-    LayoutAnimation.easeInEaseOut()
+    if (isClosingRef.current) {
+      return;
+    }
+    isClosingRef.current = true;
+    try {
+      LayoutAnimation.easeInEaseOut();
+    } catch (e) {
+      console.log('Modal close animation error', e);
+    }
     props.close()
   }
   const { colors } = useTheme()
@@ -32,7 +51,8 @@ const Modal = props => {
   }}>
     <ReactModal
       transparent={true}
-      animationType="slide">
+      animationType="slide"
+      onRequestClose={() => close()}>
       <TouchableOpacity style={{
         flex: 1, height: '100%', width: '100%',
       }}

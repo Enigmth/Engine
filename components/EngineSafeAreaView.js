@@ -1,22 +1,13 @@
 import {useTheme} from '@react-navigation/native';
 import React from 'react';
-import {StatusBar, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
-let paddingTop = StatusBar.currentHeight;
-if (!paddingTop) {
-  paddingTop = 40;
-}
 const EngineSafeAreaView = props => {
   const {colors} = useTheme();
   return (
-      <View style={{flex: 1, backgroundColor: colors.background}}>
-        <View
-            style={[
-              props.style,
-              {marginTop: paddingTop, backgroundColor: colors.background}]}>
-          {props.children}
-        </View>
-      </View>
+      <SafeAreaView style={{flex: 1, backgroundColor: colors.background}}>
+        {props.children}
+      </SafeAreaView>
   );
 };
 

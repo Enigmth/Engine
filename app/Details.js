@@ -1,5 +1,5 @@
 import {useTheme} from '@react-navigation/native';
-import {useLocalSearchParams} from 'expo-router';
+import {router, useLocalSearchParams} from 'expo-router';
 import React from 'react';
 import {
   Linking,
@@ -7,29 +7,56 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableHighlight,
   TouchableOpacity,
   View,
 } from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Colors from '../constants/Colors';
-import DimensionServiceImpl from '../services/DimensionServiceImpl';
-import SmsServiceImpl from '../services/SmsServiceImpl';
+import ScreenHeader from '../components/ScreenHeader';
 import Translate from '../Translate';
 
-const height = DimensionServiceImpl.getHeight();
-const Details = (props) => {
-  const {
-    name, latitude, longitude,
-  } = useLocalSearchParams();
-  const {colors} = useTheme();
+const FALLBACK_REGION = {
+  latitude: 42.0018,
+  longitude: 20.9716,
+  latitudeDelta: 0.02,
+  longitudeDelta: 0.02,
+};
 
-  const onCallPress = (app) => {
-    Linking.openURL(app).catch();
+const getParam = value => Array.isArray(value) ? value[0] : value;
+
+const Details = () => {
+  const params = useLocalSearchParams();
+  const {colors, dark} = useTheme();
+  const isLight = !dark;
+
+  const name = getParam(params.name) || 'Service';
+  const city = getParam(params.city) || '';
+  const address = getParam(params.address) || '';
+  const tel = getParam(params.tel) || '';
+  const lat = Number(getParam(params.latitude));
+  const lng = Number(getParam(params.longitude));
+  const hasLocation = Number.isFinite(lat) && Number.isFinite(lng);
+
+  const initialRegion = hasLocation ? {
+    latitude: lat,
+    longitude: lng,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  } : FALLBACK_REGION;
+
+  const onCallPress = () => {
+    if (!tel) {
+      return;
+    }
+    Linking.openURL(`tel:${tel}`).catch(e => {
+      console.log(e);
+    });
   };
 
-  const openDirection = (lat, lng) => {
+  const openDirection = () => {
+    if (!hasLocation) {
+      return;
+    }
     const url =
         Platform.OS === 'ios'
             ?
@@ -40,206 +67,215 @@ const Details = (props) => {
       console.log(e);
     });
   };
+
   return (
-      <>
-        <View style={{
-          height: 50,
-          justifyContent: 'space-between',
-          flexDirection: 'row',
-          paddingHorizontal: 15,
-          alignItems: 'center',
-          backgroundColor: colors.background,
-        }}>
-          <TouchableOpacity onPress={props.onPress}>
-            <Text style={{color: colors.text, width: 60}}>{Translate.t(
-                'Close')}</Text>
-          </TouchableOpacity>
+      <View style={[styles.container, {backgroundColor: colors.background}]}>
+        <ScreenHeader
+            leftLabel={Translate.t('Close')}
+            onLeftPress={() => router.back()}
+        />
 
-          <Text style={{
-            fontWeight: 'bold',
-            color: colors.text,
-          }}>{name}</Text>
+        <ScrollView
+            contentContainerStyle={styles.content}
+            showsVerticalScrollIndicator={false}>
+          <View style={[
+            styles.infoCard,
+            {
+              backgroundColor: colors.card,
+              borderColor: isLight ? '#E8EEF9' : 'transparent',
+              borderWidth: isLight ? 1 : 0,
+              shadowOpacity: isLight ? 0.14 : 0.08,
+              shadowRadius: isLight ? 20 : 14,
+              elevation: isLight ? 6 : 3,
+            },
+          ]}>
+            <View style={styles.titleRow}>
+              <View style={styles.titleWrap}>
+                <Text style={[styles.nameText, {color: colors.text}]}>
+                  {name}
+                </Text>
+                <Text style={[styles.cityText, {color: colors.text}]}>
+                  {[city, address].filter(Boolean).join(' - ')}
+                </Text>
+              </View>
+              <View style={styles.statusPill}>
+                <Ionicons name="location" size={12} color="#0A84FF"/>
+                <Text style={styles.statusText}>
+                  {hasLocation ? 'Mapped' : 'No location'}
+                </Text>
+              </View>
+            </View>
 
-          <Text style={{color: 'transparent', width: 60}}></Text>
+            <MapView
+                style={styles.map}
+                initialRegion={initialRegion}
+                zoomEnabled
+                showsUserLocation
+                showsMyLocationButton>
+              {hasLocation && (
+                  <Marker coordinate={{latitude: lat, longitude: lng}}
+                          pinColor={'#ff3b30'}
+                          title={name}/>
+              )}
+            </MapView>
 
-        </View>
+            {!hasLocation && (
+                <Text style={styles.warningText}>
+                  {Translate.t('AddressNotFound')}
+                </Text>
+            )}
+          </View>
 
-        <ScrollView style={{
-          flexDirection: 'column',
-          // marginHorizontal: 15,
-          paddingTop: 10,
-          backgroundColor: colors.background,
-          marginTop: 20,
-        }}>
-          <MapView
-
-              style={parkingMapStyle.map}
-              onRegionChange={props.onRegionChange}
-              initialRegion={{
-                // latitude: 42.008361,
-                // longitude: 20.973641,
-                latitude: parseFloat(
-                    latitude),
-                longitude: parseFloat(
-                    longitude),
-                latitudeDelta: 0.0100,
-                longitudeDelta: 0.00001,
-              }}
-              zoomEnabled={true}
-              // onPress={props.onPress}
-              ref={props.mapR}
-              showsUserLocation={true}
-              showsMyLocationButton={true}
-              // animateToCoordinate={parkedCar}
-          >
-            {latitude ?
-                <Marker coordinate={{
-                  latitude: parseFloat(latitude),
-                  longitude: parseFloat(longitude),
-                }}
-                        pinColor={'red'}
-                        title={`${name}`}
-                >
-                </Marker> :
-                <View style={{flex: 1, alignItems: 'center'}}>
-                  <Text style={{color: Colors.red}}>{Translate.t(
-                      'AddressNotFound')}</Text>
-                </View>
-            }
-          </MapView>
-
-          <View style={{
-            flex: 1,
-            justifyContent: 'space-around',
-            flexDirection: 'row',
-            paddingTop: 15,
-          }}>
-            <CallButton
-                textColor={colors.text}
+          <View style={styles.actionsWrap}>
+            <ActionButton
+                icon="call"
+                text={Translate.t('Call')}
+                onPress={onCallPress}
                 color={colors.card}
-                onPress={() => onCallPress(
-                    'tel:' + tel)}
-                name={Translate.t('Call')} icon={<TouchableHighlight
-                underlayColor={'#6d2c96'}
-                style={[
-                  {}, parkingMapStyle.icon]}
-                onPress={() => onCallPress(
-                    'tel:' + tel)}>
-              <Ionicons
-                  name={'call'}
-                  color={'#1fb00e'}
-                  size={20}
-              />
-            </TouchableHighlight>}/>
-
-            <CallButton name={'Navigate'}
-                        textColor={colors.text}
-                        color={colors.card}
-                        onPress={() => openDirection(latitude,
-                            longitude)}
-                        icon={<TouchableHighlight
-                            underlayColor={'#6d2c96'}
-                            style={[
-                              {}, parkingMapStyle.icon]}
-                            onPress={() => SmsServiceImpl.sendSMS(tel,
-                                '')}>
-                          <Ionicons
-                              name={'navigate'}
-                              color={Colors.blueLine}
-                              size={20}
-                              style={{}}
-                          />
-                        </TouchableHighlight>}/>
+                textColor={colors.text}
+                disabled={!tel}
+                isLight={isLight}
+            />
+            <ActionButton
+                icon="navigate"
+                text={'Navigate'}
+                onPress={openDirection}
+                color={colors.card}
+                textColor={colors.text}
+                disabled={!hasLocation}
+                isLight={isLight}
+            />
           </View>
         </ScrollView>
-      </>
+      </View>
   );
 };
 
-const CallButton = ({name, icon, onPress, color, textColor}) => {
+const ActionButton = ({
+                        icon,
+                        text,
+                        onPress,
+                        color,
+                        textColor,
+                        disabled,
+                        isLight,
+                      }) => {
   return (
       <TouchableOpacity
+          disabled={disabled}
           onPress={onPress}
-          style={{
-            backgroundColor: color,
-            padding: 10,
-            borderRadius: 8,
-            flex: 1,
-            marginHorizontal: 5,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-        {icon}
-        <Text numberOfLines={1} style={{color: textColor}}
-              adjustsFontSizeToFit={true}>{name}</Text>
+          style={[
+            styles.actionButton,
+            {
+              backgroundColor: color,
+              opacity: disabled ? 0.45 : 1,
+              borderColor: isLight ? '#E6EDF9' : 'transparent',
+              borderWidth: isLight ? 1 : 0,
+              shadowOpacity: isLight ? 0.12 : 0.06,
+              shadowRadius: isLight ? 14 : 8,
+              elevation: isLight ? 4 : 2,
+            },
+          ]}>
+        <Ionicons
+            name={icon}
+            color={icon === 'call' ? '#1fb00e' : '#0A84FF'}
+            size={18}
+        />
+        <Text numberOfLines={1}
+              style={[styles.actionText, {color: textColor}]}>
+          {text}
+        </Text>
       </TouchableOpacity>
   );
 };
 
-const parkingMapStyle = StyleSheet.create({
-  map: {
+const styles = StyleSheet.create({
+  container: {
     flex: 1,
-    shadowColor: '#e6e6e6',
+  },
+  content: {
+    paddingHorizontal: 14,
+    paddingBottom: 24,
+  },
+  infoCard: {
+    borderRadius: 18,
+    padding: 12,
+    shadowColor: '#111827',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 8,
     },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    height: height / 2.5,
-    borderRadius: 30,
-    marginHorizontal: 15,
-    marginTop: 20,
+    shadowOpacity: 0.08,
+    shadowRadius: 14,
+    elevation: 3,
   },
-
-  markerContainer: {
-    flexDirection: 'column',
+  titleRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: 10,
+  },
+  titleWrap: {
+    flex: 1,
+    paddingRight: 8,
+  },
+  nameText: {
+    fontSize: 18,
+    fontWeight: '700',
+  },
+  cityText: {
+    marginTop: 3,
+    fontSize: 13,
+    opacity: 0.75,
+  },
+  statusPill: {
+    flexDirection: 'row',
     alignItems: 'center',
+    borderRadius: 999,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    backgroundColor: '#EAF2FF',
   },
-  marker:
-      {
-        height: 18,
-        width: 38,
-        marginTop: 5,
-        marginBottom: 0,
-        position: 'absolute',
-      },
-  pickedMarker:
-      {
-        marginTop: 6,
-        height: 23,
-        width: 50,
-        paddingTop: 4,
-        paddingBottom: 0,
-        position: 'absolute',
-      },
-  img: {
-    height: 45,
-    width: 45,
+  statusText: {
+    marginLeft: 4,
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#0A84FF',
   },
-  pickedImg: {
-    height: 60,
-    width: 60,
+  map: {
+    height: 260,
+    borderRadius: 14,
   },
-  pickedText: {
-    marginTop: 10,
-    position: 'absolute',
+  warningText: {
+    marginTop: 8,
+    fontSize: 12,
+    color: '#ff3b30',
+    fontWeight: '600',
   },
-  text: {
-    marginTop: 5,
-    position: 'absolute',
+  actionsWrap: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 12,
   },
-  inputContainer: {
-    alignContent: 'center',
+  actionButton: {
+    flex: 1,
+    borderRadius: 14,
+    paddingVertical: 11,
+    marginHorizontal: 4,
     alignItems: 'center',
-  },
-  icon: {
-    // width: 40,
-    alignItems: 'center',
-    // borderRadius: 20,
-    // padding: 5,
     justifyContent: 'center',
-    marginBottom: 5,
+    flexDirection: 'row',
+    shadowColor: '#0F172A',
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+  },
+  actionText: {
+    marginLeft: 6,
+    fontSize: 14,
+    fontWeight: '700',
   },
 });
+
 export default Details;
